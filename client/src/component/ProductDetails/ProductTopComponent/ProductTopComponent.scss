@@ -1,0 +1,185 @@
+.productTopComponent {
+    &__container {
+        display: inline-flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 124px;
+    }
+
+    &__image-frame {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 80px;
+
+        &-main {
+            display: flex;
+            height: 327px;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 24px;
+
+            &-image {
+                display: flex;
+                width: 384px;
+                height: 326px;
+                justify-content: center;
+                align-items: center;
+
+                &-size {
+                    width: 384px;
+                    height: 326px;
+                    flex-shrink: 0;
+                }
+            }
+        }
+    }
+
+    &__details-frame {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+
+        &-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+
+            &-content {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+
+                &-title {
+                    width: 632px;
+                    height: 83px;
+                    color: var(--Ilona-text_dark, #0C0D0D);
+                    font-family: Inter;
+                    font-size: 32px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 130%;
+                    /* 41.6px */
+                }
+
+                &-rating {
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+
+                    &-stars {
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 4px;
+
+                        &-icon {
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+
+                    &-count-review {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 10px;
+
+                        &-text {
+                            color: var( #0C0D0D);
+                            font-family: Inter;
+                            font-size: 12px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: normal;
+                        }
+                    }
+                }
+            }
+
+            &-text-price {
+                color: var(--Ilona-text_dark, #0C0D0D);
+                font-family: Inter;
+                font-size: 32px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 130%;
+                /* 41.6px */
+            }
+
+            &-text-description {
+                align-self: stretch;
+                color: (#0C0D0D);
+                font-family: Inter;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 150%;
+                /* 27px */
+            }
+        }
+
+        &-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+
+            &-count {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                &-icon {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                &-text {
+                    color: var(#0C0D0D);
+                    /* main/h_semibold_20 */
+                    font-family: Montserrat;
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 130%;
+                    /* 26px */
+                }
+            }
+
+            &-buy {
+                display: flex;
+                align-items: center;
+                gap: 24px;
+
+                &-button {
+                    display: flex;
+                    width: 308px;
+                    padding: 16px 99px;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    border-radius: 8px;
+                    background: var(--main-blue, #37298C);
+
+                    &-text {
+                        color: var(--main-white, #FFF);
+                        font-family: Inter;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                    }
+                }
+
+                &-icon {
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+        }
+    }
+}

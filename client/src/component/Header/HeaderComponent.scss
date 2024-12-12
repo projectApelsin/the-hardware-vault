@@ -1,0 +1,82 @@
+.header {
+    &__container {
+        display: flex;
+        width: 1440px;
+        padding: 24px 80px;
+        align-items: center;
+        gap: 162px;
+        background: #466BE6;
+    }
+
+    &__logo {
+        display: flex;
+        width: 133px;
+        height: 63px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        flex-shrink: 0;
+
+        &-first-icon {
+            width: 133.159px;
+            height: 17.155px;
+            flex-shrink: 0;
+        }
+
+        &-second-icon {
+            width: 76.659px;
+            height: 36.075px;
+            flex-shrink: 0;
+        }
+    }
+
+    &__icons-group {
+        display: flex;
+        width: 985px;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+
+        &-search-line {
+            display: flex;
+            width: 690px;
+            height: 52px;
+            padding: 8px 0px 8px 16px;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+
+            &-icon {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 24px;
+                height: 24px;
+            }
+
+            &-text {
+                color: var(--Ilona-text_dark, #0C0D0D);
+                text-align: center;
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+
+        &__linear {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+
+            &-icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+
+    }
+
+}

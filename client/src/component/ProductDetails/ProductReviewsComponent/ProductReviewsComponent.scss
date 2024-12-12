@@ -1,0 +1,151 @@
+.reviews {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        align-self: stretch;
+    }
+
+    &__frame {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        align-self: stretch;
+
+        &-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            align-self: stretch;
+
+            &-title {
+                color: var(--Ilona-text_dark, #0C0D0D);
+                font-family: Inter;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 130%;
+                /* 31.2px */
+            }
+
+            &-button {
+                display: flex;
+                width: 200px;
+                padding: 16px 99px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                border-radius: 8px;
+                border: 1px solid var(--Ilona-text_dark, #0C0D0D);
+
+                &-text {
+                    color: var(--Ilona-text_dark, #0C0D0D);
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+            }
+        }
+
+        &-body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            align-self: stretch;
+
+            &-review {
+                display: flex;
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                align-self: stretch;
+
+                &-group {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 16px;
+                    align-self: stretch;
+
+                    &-header {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 8px;
+                        align-self: stretch;
+
+                        &-date {
+                            color: var(--main-disabled, #8B96A9);
+                            text-align: right;
+                            font-family: Inter;
+                            font-size: 12px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: normal;
+                        }
+
+                        &-title {
+                            display: flex;
+                            align-items: center;
+                            align-self: stretch;
+
+                            &-username {
+                                display: flex;
+                                align-items: center;
+                                gap: 8px;
+                                flex: 1 0 0;
+
+                                &-text {
+                                    color: var(#0C0D0D);
+                                    font-family: Inter;
+                                    font-size: 16px;
+                                    font-style: normal;
+                                    font-weight: 500;
+                                    line-height: normal;
+                                }
+                            }
+                        }
+
+                        &-rating {
+                            display: flex;
+                            align-items: flex-start;
+                            gap: 4px;
+
+                            &-icon {
+                                width: 20px;
+                                height: 20px;
+                            }
+                        }
+                    }
+
+                    &-content {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 8px;
+                        align-self: stretch;
+
+                        &-text{
+                            color: var(--Ilona-text_dark, #0C0D0D);
+                            font-family: Inter;
+                            font-size: 18px;
+                            font-style: normal;
+                            font-weight: 400;
+                            line-height: 150%;
+                            /* 27px */
+                        }
+                    }
+
+
+                }
+            }
+        }
+
+    }
+}
