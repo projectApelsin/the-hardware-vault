@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,5 +24,8 @@ public class Category {
 
     @OneToMany(mappedBy = "category", orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<Characteristic> characteristics = new LinkedHashSet<>();
 
 }

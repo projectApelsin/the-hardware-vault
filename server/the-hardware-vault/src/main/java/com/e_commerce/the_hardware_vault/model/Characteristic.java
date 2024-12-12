@@ -20,6 +20,12 @@ public class Characteristic {
     @Column(name = "title", nullable = false, length = 50)
     private String title;
 
+    @ManyToMany
+    @JoinTable(name = "characteristic_categories",
+            joinColumns = @JoinColumn(name = "characteristic_id"),
+            inverseJoinColumns = @JoinColumn(name = "categories_id"))
+    private Set<Category> categories = new LinkedHashSet<>();
+
     @OneToMany(mappedBy = "characteristic", orphanRemoval = true)
     private Set<CharacteristicValue> characteristicValues = new LinkedHashSet<>();
 
