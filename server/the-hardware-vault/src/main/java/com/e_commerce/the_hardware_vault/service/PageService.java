@@ -48,7 +48,7 @@ public class PageService {
         this.categoryRepository = categoryRepository;
     }
 
-    public ProductDetailsPageDTO getProductDetails(Integer productId) {
+    public ProductDetailsPageDTO getProductDetails(Integer productId, Pageable pageable) {
         Product product = productRepository.findById(productId).get();
         ProductDetailsPageDTO productDetailsPageDTO = new ProductDetailsPageDTO();
 
@@ -71,7 +71,7 @@ public class PageService {
         productDetailsPageDTO.setCountReviews(reviewRepository.findCountReviewsByProductId(productId));
 
         productDetailsPageDTO.setProductGroup(ProductService.toProductGroupDTO(productRepository
-                        .findSimilarProductsById(productId, PageRequest.of(0, 4)),
+                        .findSimilarProductsById(productId, pageable).toList(),
                 "Схожі ігри", null));
 
         return productDetailsPageDTO;
@@ -202,8 +202,8 @@ public class PageService {
     }
 
 
-    public ProductGroupDTO getSearchResultPage(String query) {
-        return ProductService.toProductGroupDTO(productRepository.findAllByTitleLike(query),
+    public ProductGroupDTO getSearchResultPage(String query, Pageable pageable) {
+        return ProductService.toProductGroupDTO(productRepository.findAllByTitleLike(query, pageable).toList(),
                 "Результати Вашого пошуку", null);
     }
     public List<CharacteristicFilterDTO> getCategoryCharacteristic(Integer categoryId){
@@ -232,9 +232,9 @@ public class PageService {
         return characteristicFilterDTOList;
     }
 
-    public List<ProductCardDTO> getFastSearchResult(String query) {
+    public List<ProductCardDTO> getFastSearchResult(String query, Pageable pageable) {
         List<ProductCardDTO> productCardDTOList = new ArrayList<>();
-        productRepository.findAllByTitleLike(query).forEach(product -> {
+        productRepository.findAllByTitleLike(query, pageable).forEach(product -> {
             productCardDTOList.add(ProductService.toProductCardDTO(product));
         });
         return productCardDTOList;

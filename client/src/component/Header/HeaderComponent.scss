@@ -1,8 +1,12 @@
+@import '../../normalize.css';
+
 .header {
+
     &__container {
         display: flex;
-        width: 1440px;
-        padding: 24px 80px;
+        max-width: 192vh;
+        width: 100%;
+        padding: 24px 100.5px;
         align-items: center;
         gap: 162px;
         background: #466BE6;
@@ -36,15 +40,36 @@
         justify-content: space-between;
         align-items: center;
         flex-shrink: 0;
+        position: relative;
 
-        &-search-line {
+        &-search-area {
+
             display: flex;
             width: 690px;
-            height: 52px;
-            padding: 8px 0px 8px 16px;
+            height: 40px;
+            padding: 5px 0px 5px 16px;
             align-items: center;
+
             gap: 8px;
             flex-shrink: 0;
+            border-radius: 0.8vh;
+            background-color: rgb(255, 255, 255);
+
+
+            &-search-line {
+                border: none;
+                width: 690px;
+                height: 40px;
+                outline: none;
+                padding-left: 8px;
+                font-size: 16px;
+                line-height: 18px;
+
+                &:focus {
+                    border: none;
+                    box-shadow: none;
+                }
+            }
 
             &-icon {
                 display: flex;
@@ -52,6 +77,8 @@
                 align-items: center;
                 width: 24px;
                 height: 24px;
+                position: absolute;
+
             }
 
             &-text {
@@ -79,4 +106,67 @@
 
     }
 
+}
+
+
+.search {
+    &__container {
+        top: 65px;
+        
+        display: flex;
+        width: 700px;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        z-index: 10;
+        gap: 32px;
+        margin-top: 15px;
+        border-radius: 8px;
+        background: #466BE6;
+    }
+
+    &__group {
+        display: flex;
+
+        justify-content: space-around;
+        align-items: center;
+        align-self: stretch;
+    }
+
+    &__card {
+        display: flex;
+        width: 250px;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+
+        &-top {
+            display: flex;
+            height: 250px;
+            justify-content: center;
+            align-items: center;
+            align-self: stretch;
+        }
+
+        &-icon {
+            display: flex;
+            width: 250px;
+            height: 250px;
+            justify-content: flex-end;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+
+    &__text {
+        color: var(--Nika-light, #FEFFFE);
+        /* main/h_semibold_20 */
+        font-family: Montserrat;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 130%;
+        /* 26px */
+    }
 }

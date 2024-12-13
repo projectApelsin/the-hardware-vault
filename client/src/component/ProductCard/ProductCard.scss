@@ -1,83 +1,140 @@
+@import '../../normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 .productCard {
+    
+    &__container {
+        position: relative;
+        display: flex;
+        padding: 16px 0px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: 8px;
+        background: #FAF5FF;
+        width: 308px;
+        height: 500px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+       
+    }
 
-    &__item {
-        max-width: 308px;
-        width: 100%;
-        padding: 10px;
+    &__image {
+        display: flex;
+        width: 308px;
+        height: 308px;
+        padding: 72px 40px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
 
-        &-image {
-            position: relative;
-            width: 100%;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
+        &-size {
+            width: 228px;
+            height: 196px;
+            flex-shrink: 0;
         }
+    }
 
-        &-icon {
-            position: absolute;
-            right: 16px;
-            top: 16px;
-            cursor: pointer;
-        }
+    &__favourite {
+        position: absolute;
+        top: 16px; // Отступ сверху
+        right: 16px; // Отступ справа
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        
+    }
 
-        &-bottom {
-            
-            padding: 24px 16px;
+    &__bottom {
+        display: flex;
+        padding: 0px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;
 
-        }
-
-        &-name {
-            font-size: 16px;
-            line-height: 20px;
-            margin-bottom: 16px;
-            height: 30px;
-        }
-
-        &-stars {
+        &-title {
             display: flex;
-            padding: 0;
-            margin: 0 0 24px 0;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            gap: 10px;
+            align-self: stretch;
 
-
-            &-item {
-                list-style: none;
-                padding: 0;
-                margin-right: 4px;
-                cursor: pointer;
+            &-text {
+                color: var(--Ilona-bg, #111);
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
             }
         }
 
-        &-actions {
+        &-rating {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 10px;
+
+            &-group {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 4px;
+
+                &-icon {
+                    width: 20px;
+                    height: 20px;
+                    
+                }
+            }
+        }
+
+        &-payment {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            align-self: stretch;
 
             &-prices {
-                max-width: 140px;
+                max-width:  170px;
                 width: 100%;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 font-size: 20px;
                 line-height: 26px;
-            }
 
-            &-value {
-                color: #000;
-            }
+                &-value {
+                    color: #000;
+                }
 
-            &-old {
-                color: rgba(197, 197, 197, 1);
-                position: relative;
+                &-old {
+                    color: rgba(197, 197, 197, 1);
+                    position: relative;
 
-                &:before {
-                    content: '';
-                    border-bottom: 2px solid rgba(197, 197, 197, 1);
-                    position: absolute;
-                    width: 100%;
-                    height: 50%;
-                    transform: rotate(-12deg);
-                    top: -2px;
+                    &:before {
+                        content: '';
+                        border-bottom: 2px solid rgba(197, 197, 197, 1);
+                        position: absolute;
+                        width: 100%;
+                        height: 50%;
+                        transform: rotate(-12deg);
+                        top: -2px;
+                    }
                 }
             }
+
+            &-icon {
+                width: 32px;
+                height: 32px;
+                cursor: pointer;
+            }
+
+
         }
     }
 }

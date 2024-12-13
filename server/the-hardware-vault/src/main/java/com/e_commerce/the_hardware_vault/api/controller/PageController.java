@@ -28,8 +28,8 @@ public class PageController {
     private PageService pageService;
 
     @GetMapping("/public/productDetails/{id}")
-    private ResponseEntity<ProductDetailsPageDTO> getProductDetails(@PathVariable Integer id) {
-        return ResponseEntity.ok().body(pageService.getProductDetails(id));
+    private ResponseEntity<ProductDetailsPageDTO> getProductDetails(@PathVariable Integer id, Pageable pageable) {
+        return ResponseEntity.ok().body(pageService.getProductDetails(id,pageable));
     }
     // TODO реализовать
     @GetMapping("/public/homePage")
@@ -58,13 +58,13 @@ public class PageController {
     }
     // TODO реализовать
     @GetMapping("/public/fastSearch/{query}")
-    private ResponseEntity<List<ProductCardDTO>> getFastSearchResult(@PathVariable String query){
-        return ResponseEntity.ok().body(pageService.getFastSearchResult(query));
+    private ResponseEntity<List<ProductCardDTO>> getFastSearchResult(@PathVariable String query, Pageable pageable){
+        return ResponseEntity.ok().body(pageService.getFastSearchResult(query,pageable));
     }
 
     @GetMapping("/public/searchResult/{query}")
-    private ResponseEntity<ProductGroupDTO> getSearchResultPage(@PathVariable String query){
-        return ResponseEntity.ok().body(pageService.getSearchResultPage(query));
+    private ResponseEntity<ProductGroupDTO> getSearchResultPage(@PathVariable String query, Pageable pageable){
+        return ResponseEntity.ok().body(pageService.getSearchResultPage(query, pageable));
     }
 
     @GetMapping("/public/categoryTitles")

@@ -21,11 +21,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     )
     AND p.id != :productId
 """)
-    List<Product> findSimilarProductsById(@Param("productId") Integer productId, Pageable pageable);
+    Page<Product> findSimilarProductsById(@Param("productId") Integer productId, Pageable pageable);
 
 
     @Query("SELECT p FROM Product p WHERE LOWER(p.title) LIKE LOWER(CONCAT('%', :searchQuery, '%'))")
-    List<Product> findAllByTitleLike(@Param("searchQuery") String searchQuery);
+    Page<Product> findAllByTitleLike(@Param("searchQuery") String searchQuery, Pageable pageable);
 
     @Query("""
     SELECT p 
