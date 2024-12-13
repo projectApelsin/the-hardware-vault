@@ -1,36 +1,42 @@
 .modal {
     &__container {
         display: inline-flex;
-        padding: 40px;
+        padding: 4vh;
         align-items: center;
-        gap: 10px;
+        gap: 1vh;
+        max-height: 90vh;
+        
     }
 
     &__content {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 32px;
+        gap: 3.2vh;
+        border-radius: 8px;
+        background: #FAF5FF;
+
 
         &-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             align-self: stretch;
+            height: 2vh;
 
             &-text {
                 color: var(--Ilona-bg, #111);
                 font-family: Inter;
-                font-size: 24px;
+                font-size: 2vh;
                 font-style: normal;
                 font-weight: 600;
-                line-height: 130%;
+                
                 /* 31.2px */
             }
 
             &-icon {
-                width: 24px;
-                height: 24px;
+                width: 2.4vh;
+                height: 2.4vh;
             }
         }
 
@@ -39,30 +45,33 @@
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
-            gap: 24px;
+            gap: 2.4vh;
             align-self: stretch;
+            
 
             &-input {
                 display: flex;
-                width: 410px;
+                width: 41vh;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 16px;
+                gap: 1.6vh;
+                
 
                 &-frame {
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
-                    gap: 8px;
+                    
                     align-self: stretch;
+                    height: 8vh;
 
                     &-title {
                         color: var(--Ilona-text_grey, #808080);
                         font-family: Inter;
-                        font-size: 16px;
+                        font-size: 1.6vh;
                         font-style: normal;
                         font-weight: 500;
-                        line-height: 150%;
+                        
                         /* 24px */
                     }
 
@@ -70,22 +79,30 @@
                         display: flex;
                         flex-direction: column;
                         align-items: flex-start;
-                        gap: 4px;
+                        gap: 0.4vh;
                         align-self: stretch;
+                        
+
+                        &-icon{
+                            width: 2vh;
+                            height: 2vh;
+                            margin-left: 1vh;
+                        }
 
                         &-area {
                             display: flex;
-                            padding: 12px 0px 12px 20px;
+                            padding: 1.2vh 0px 1.2vh 2vh;
                             align-items: center;
-                            gap: 10px;
+                            gap: 1vh;
+                            height: 2vh;
                             align-self: stretch;
-                            border-radius: 8px;
-                            border: 1px solid #37298C;
+                            border-radius: 0.8vh;
+                            border: 0.1vh solid #37298C;
 
                             &-text {
                                 color: var(--Ilona-text_grey, #808080);
                                 font-family: Lato;
-                                font-size: 16px;
+                                font-size: 1.6;
                                 font-style: normal;
                                 font-weight: 500;
                                 line-height: 150%;
@@ -97,17 +114,17 @@
                     &-checkbox {
                         display: flex;
                         align-items: center;
-                        gap: 8px;
+                        gap: 0.8vh;
 
                         &-icon {
-                            width: 24px;
-                            height: 24px;
+                            width: 2.4vh;
+                            height: 2.4vh;
                         }
 
                         &-text {
                             color: #808080;
                             font-family: Inter;
-                            font-size: 16px;
+                            font-size: 1.6vh;
                             font-style: normal;
                             font-weight: 500;
                             line-height: 150%;
@@ -122,22 +139,26 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 16px;
+                gap: 1.6vh;
                 align-self: stretch;
 
                 &-button {
                     display: flex;
-                    height: 51px;
-                    padding: 12px 46px;
+                    height: 5.1vh;
+                    padding: 1.2vh 4.6vh;
+                    margin-top: 3vh;
                     justify-content: center;
                     align-items: center;
-                    gap: 10px;
+                    gap: 1vh;
                     align-self: stretch;
+                    border-radius: 0.8vh;
+                    background: #37298C;
+                    cursor: pointer;
 
                     &-text {
                         color: var(--Artem-text_light, #FAF5FF);
                         font-family: Inter;
-                        font-size: 16px;
+                        font-size: 1.6vh;
                         font-style: normal;
                         font-weight: 500;
                         line-height: 150%;
@@ -148,7 +169,7 @@
                 &-or-text {
                     color: var(#808080);
                     font-family: Inter;
-                    font-size: 16px;
+                    font-size: 1.6vh;
                     font-style: normal;
                     font-weight: 400;
                     line-height: 150%;
@@ -159,12 +180,12 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    gap: 10px;
+                    gap: 1vh;
 
                     &-text {
                         color: #37298C;
                         font-family: Inter;
-                        font-size: 16px;
+                        font-size: 1.6vh;
                         font-style: normal;
                         font-weight: 500;
                         line-height: 150%;
@@ -176,3 +197,56 @@
         }
     }
 }
+
+
+.modal__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal__content {
+    position: relative;
+    
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 90%; /* Устанавливаем максимальную ширину */
+    width: fit-content; /* Автоматическая ширина на основе содержимого */
+    max-height: 90vh; /* Устанавливаем максимальную высоту */
+    overflow-y: scroll; /* Скролл активен */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0);
+}
+
+/* Скрываем скроллбар только визуально */
+.modal__content::-webkit-scrollbar {
+    width: 0; /* Устанавливаем ширину в 0 */
+    height: 0;
+}
+
+.modal__content {
+    -ms-overflow-style: none; /* Для Internet Explorer и Edge */
+    scrollbar-width: none; /* Для Firefox */
+}
+
+/* Блокируем прокрутку на основном контенте при открытии модального окна */
+body.lock-scroll {
+    overflow: hidden; /* Отключаем прокрутку на странице */
+}
+
+.modal__close {
+    position: absolute;
+    top: 1.2vh;
+    right: 1.2vh;
+    background: none;
+    border: none;
+    font-size: 1.8vh;
+    cursor: pointer;
+}
+

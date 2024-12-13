@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
-@import '../../normalize.css';
-.productGroup {
+
+.list {
     margin-bottom: 80px;
   
     &__header {
@@ -16,23 +15,12 @@
         font-size: 24px;
         line-height: 30px;
         font-weight: 600;
-        font-style: Montserrat;
       }
   
-      &-link {
+      &-sort {
         display: flex;
         align-items: center;
         text-decoration: none;
-  
-        &:hover {
-          text-decoration: underline;
-        }
-  
-        &-text {
-          color: #000;
-          margin-right: 8px;
-          transition: 0.3s text-decoration;
-        }
       }
     }
   
@@ -42,9 +30,15 @@
         width: 100%;
         display: flex;
         justify-content: left;
-        gap: 30px;
+        flex-wrap: wrap;
         margin: 0 auto;
+  
+  
+      }
+  
+      &-card {
+        width: calc(25%);
       }
     }
-  }
   
+  }

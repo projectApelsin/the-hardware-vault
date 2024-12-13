@@ -1,3 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+
+body.lock-scroll {
+  overflow: hidden;
+  /* Отключаем прокрутку на странице */
+}
+
+p {
+  margin: 0;
+}
+
+
 .cart {
     position: relative;
     max-width: 130.3vh;
@@ -85,7 +103,7 @@
         &-capacity {
             font-size: 1.6vh;
             line-height: 2.4vh;
-            color: $gray;
+            color: #333;
             margin-bottom: 2.4vh;
         }
 
@@ -131,7 +149,8 @@
     }
 
     &__summary {
-        background-color: #EDE9F5;
+        border-radius: 8px;
+        background: #FAF5FF;
 
         padding: 4vh;
         max-width: 31vh;
@@ -164,7 +183,7 @@
             height: max-content;
             color: rgba(254, 255, 254, 1);
             border-radius: 8px;
-            background: #FAF5FF;
+            background: #37298C;
             cursor: pointer;
             transition: 0.3s background-color;
             border: none;

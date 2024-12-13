@@ -1,0 +1,70 @@
+
+
+.sort {
+
+
+    &__container {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  
+    &__button {
+      display: flex;
+      padding: 16px;
+      margin-bottom: 10px;
+      justify-content: space-between;
+      align-items: center;
+      align-self: stretch;
+      border-radius: 8px;
+      width: 284px;
+      background: var(--Nika-light_green, rgb(88, 117, 87));
+      cursor: pointer;
+    }
+  
+    &__text {
+      color: var(--Nika-dark, #0e0f0e);
+      font-family: Montserrat, sans-serif;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+  
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 16px 0px;
+      align-items: flex-start;
+      border-radius: 8px;
+      background: var(--Nika-light_green, rgb(88, 117, 87));
+      position: absolute;
+      width: 317px;
+      z-index: 10;
+    }
+  
+    &__option {
+      display: flex;
+      padding-left: 16px;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+  
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+  
+      .sort__text {
+        color: var(--Nika-dark, #0e0f0e);
+        font-family: Montserrat, sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+    }
+  }
+  
