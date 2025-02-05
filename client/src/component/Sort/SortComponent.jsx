@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./SortComponent.scss";
 
-const SortComponent = ({ products, onSorted }) => {
+const SortComponent = ({ products = [], onSorted }) => {
   const [criteria, setCriteria] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   // Функция сортировки
   const sortProducts = (productsToSort, criteria) => {
-    if (!criteria) return productsToSort;
+    if (!Array.isArray(productsToSort)) return []; // Если productsToSort не массив, возвращаем пустой массив
 
     let sorted = [...productsToSort];
     if (criteria === "Цiною (по возрастанию)") {

@@ -15,12 +15,23 @@ export async function getCategoryPage(categoryId, page = 0, size = 12, filters =
     throw error;
   }
 }
+// Получить домашнюю страницу с пагинацией и фильтрами
+export async function getHomePage({
+  page = 0,
+  size = 4,
+  categoryId = null,
+  budget = null
+} = {}) {
+  // Приводим к null, если данные отсутствуют или не выбраны
+  const requestBody = {
+    categoryId: categoryId || null,
+    budget: budget || null
+  };
 
-// Получить домашнюю страницу с пагинацией
-export async function getHomePage(page = 0, size = 4) {
-  const response = await ApiConfig.get('/api/public/homePage', {
-    params: { page, size },
+  const response = await ApiConfig.post('/api/public/homePage', requestBody, {
+    params: { page, size }
   });
+  
   return response.data;
 }
 

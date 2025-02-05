@@ -32,7 +32,7 @@ public class PageController {
         return ResponseEntity.ok().body(pageService.getProductDetails(id,pageable));
     }
     // TODO реализовать
-    @GetMapping("/public/homePage")
+    @PostMapping("/public/homePage")
     private ResponseEntity<List<ProductGroupDTO>> getHomePage(HttpServletRequest request,
                                                               Pageable pageable, @RequestBody RecommendationFilterDTO recommendationFilterDTO){
         return ResponseEntity.ok().body(pageService.getHomePage(customerService

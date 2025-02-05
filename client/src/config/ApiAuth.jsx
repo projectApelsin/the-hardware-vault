@@ -3,7 +3,7 @@ import ApiConfig from './ApiConfig';
 
 // Запрос на логин
 export async function login({ email, password }) {
-  try {
+  try { 
     const response = await ApiConfig.post('/api/auth/login', { email, password });
     return response.data; // Возвращаем данные, если запрос успешен
   } catch (error) {
