@@ -1,41 +1,86 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HeaderComponent from './component/Header/HeaderComponent';
-import FooterComponent from './component/Footer/FooterComponent';
-import ProductDetailsPage from './page/ProductDetailsPage';
-import WishlistPage from './page/WishlistPage';
-import HomePage from './page/HomePage';
-import FilterComponent from './component/Filter/FilterCharacterisctic';
-import CategoryPage from './page/CategoryPage';
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import HeaderComponent from "./component/Header/HeaderComponent";
+import FooterComponent from "./component/Footer/FooterComponent";
+import ProductDetailsPage from "./page/ProductDetailsPage";
+import WishlistPage from "./page/WishlistPage";
+import HomePage from "./page/HomePage";
+import CategoryPage from "./page/CategoryPage";
 
-import './App.css'
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
-
-  const [filters, setFilters] = useState({});
-
-  const handleFilterChange = (selectedFilters) => {
-    console.log("Selected filters:", selectedFilters);
-    setFilters(selectedFilters);
-  };
+function AnimatedRoutes() {
+  const location = useLocation();
 
   return (
-    <Router>
-      {/* Компоненты, которые всегда должны отображаться */}
-      <HeaderComponent />
-      <div className="main-content">
-        <Routes>
-          {/* Главная страница или другие маршруты */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/productDetails/:productId" element={<ProductDetailsPage />} />
-          <Route path="/wishlist" element={<WishlistPage />} />
-          <Route path="/category/:id" element={<CategoryPage/>}/>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route
+          path="/"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <HomePage />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/productDetails/:productId"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ProductDetailsPage />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <WishlistPage />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/category/:id"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <CategoryPage />
+            </motion.div>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
-          {/* Добавьте другие маршруты по мере необходимости */}
-        </Routes>
+function App() {
+  return (
+    <Router>
+      <HeaderComponent /> {/* Фиксированный хедер */}
+      <div className="content">
+        <AnimatedRoutes />
       </div>
-      <FooterComponent />
+      <FooterComponent /> {/* Фиксированный футер */}
     </Router>
   );
 }

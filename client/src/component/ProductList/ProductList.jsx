@@ -1,45 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import SortComponent from "../sort/SortComponent";
 import "./ProductList.scss";
 
 const ProductList = ({ productGroup }) => {
-  const { title, productCards = [] } = productGroup; // Значение по умолчанию для productCards
+  const { title, productCards = [] } = productGroup;
 
-  const [sortedProducts, setSortedProducts] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState(null);
 
-  // Устанавливаем начальные продукты для рендера
-  useEffect(() => {
-    setSortedProducts(productCards);
-  }, [productCards]);
+  // ✅ Используем useMemo, чтобы избежать повторных ререндеров
+  const sortedProducts = useMemo(() => {
+    if (!sortCriteria) return productCards;
+    
+    let sorted = [...productCards];
 
-  const handleSorted = (sorted) => {
-    setSortedProducts(sorted || []); // Обновляем массив с отсортированными продуктами
-  };
+    if (sortCriteria === "Цiною (по возрастанию)") {
+      sorted.sort((a, b) => a.price - b.price);
+    } else if (sortCriteria === "Цiною (по убыванию)") {
+      sorted.sort((a, b) => b.price - a.price);
+    } else if (sortCriteria === "Назвою") {
+      sorted.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    return sorted;
+  }, [sortCriteria, productCards]); // ✅ Отсортированные продукты обновляются только при изменении `sortCriteria` или `productCards`
 
   return (
     <section className="list">
       <div className="list__header">
         <div className="list__header-container">
           <p className="list__header-title">{title}</p>
-          <SortComponent products={sortedProducts} onSorted={handleSorted} />
+          <SortComponent sortCriteria={sortCriteria} setSortCriteria={setSortCriteria} />
         </div>
       </div>
       <div className="list__items">
         <div className="list__items-container">
-          {Array.isArray(sortedProducts) &&
-            sortedProducts.map((product) => (
-              <div className="list__items-card" key={product.id}>
-                <ProductCard
-                  id={product.id}
-                  title={product.title}
-                  price={product.price}
-                  discountPrice={product.discountPrice}
-                  rating={product.rating}
-                  image={product.image}
-                />
-              </div>
-            ))}
+          {sortedProducts.map((product) => (
+            <div className="list__items-card" key={product.id}>
+              <ProductCard {...product} />
+            </div>
+          ))}
         </div>
       </div>
     </section>

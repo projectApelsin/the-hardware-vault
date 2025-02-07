@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCategoryTitles } from "../../config/ApiPage"; // Импорт функции получения категорий
-import "./CategoryComponent.scss"; // Подключаем ваши стили
+
 
 const CategoryComponent = () => {
   const [categories, setCategories] = useState([]);
@@ -24,14 +24,14 @@ const CategoryComponent = () => {
   };
 
   return (
-    <div className="category__container">
+    <div className="flex flex-row mt-5 justify-center gap-20 mb-15">
       {/* Список категорий */}
-      <div className="category__category-content">
-        <div className="category__category-content-frame">
+      <div className="bg-gray-100 w-70 p-5">
+        <div className="">
           {categories.map((category) => (
             <div
               key={category.id}
-              className="category__category-content-frame-group"
+              className="flex flex-row justify-between cursor-pointer"
               onClick={() => handleCategoryClick(category.id)}
             >
               <p className="category__category-content-frame-group-title">
@@ -41,7 +41,7 @@ const CategoryComponent = () => {
                 <img
                   src="/icons/category-icon.svg"
                   alt="Arrow"
-                  className="category__category-content-frame-group-icon-size"
+                  className="w-4 h-4"
                 />
               </div>
             </div>
@@ -53,9 +53,9 @@ const CategoryComponent = () => {
       <div className="category__banner-group">
         <div className="category__banner-group-frame">
           <img
-            src="/images/banner-example.jpg" // Здесь укажите путь к вашему баннеру
+            src="/images/banner.jpg" // Здесь укажите путь к вашему баннеру
             alt="Banner"
-            className="category__banner-group-frame-size"
+            className=" h-[600px] w-[1000px] "
           />
         </div>
       </div>

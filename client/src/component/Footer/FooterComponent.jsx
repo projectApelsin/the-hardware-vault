@@ -1,25 +1,25 @@
 import React from 'react';
-import './FooterComponent.scss';
+
 
 const FooterComponent = () => {
   return (
 
-    <div className="footer__container">
-      {/* Логотип футера */}
-      <div className='footer__content'>
-        <div className="footer__logo">
+    
+     
+      <div className='grid grid-flow-col w-full h-50 p-5 bg-smalt-500 items-center pr-10 pl-10 '>
+      
           <img
             className="footer__icon"
             src="/icons/logo.svg"
             alt="Footer logo image"
           />
-        </div>
+        
 
         {/* Контент футера */}
-        <div className="footer__information-block">
+        <div className="flex flex-row gap-10 ">
           {/* Секция "Додатково" */}
-          <div className="footer__information-block-column">
-            <p className="footer__information-block-column-header-text">Додатково</p>
+          <div className="flex flex-col gap-2">
+            <p className="font-montserrat font-semibold text-2xl">Додатково</p>
             <p className="footer__information-block-column-info-text">Публічна оферта</p>
             <p className="footer__information-block-column-info-text">
               Політика використання <br />
@@ -28,26 +28,26 @@ const FooterComponent = () => {
           </div>
 
           {/* Секция "Інформація" */}
-          <div className="footer__information-block-column">
-            <p className="footer__information-block-column-header-text">Інформація</p>
-            <div className='footer__information-block-column-info'>
+          <div className="flex flex-col gap-2">
+            <p className="font-montserrat font-semibold text-2xl">Інформація</p>
+            
               <p className="footer__information-block-column-info-text">Доставка</p>
               <p className="footer__information-block-column-info-text">Оплата</p>
               <p className="footer__information-block-column-info-text">Про продукцію</p>
-            </div>
+            
           </div>
 
           {/* Секция "Служба підтримки" */}
-          <div className="footer__information-block-column">
-            <p className="footer__information-block-column-header-text">Служба підтримки:</p>
-            <div className='footer__information-block-column-info'>
+          <div className="flex flex-col gap-2">
+            <p className="font-montserrat font-semibold text-2xl">Служба підтримки:</p>
+            
               <p className="footer__information-block-column-info-text">@2024Ecofriendly</p>
               <p className="footer__information-block-column-info-text">0 456 278 836</p>
             </div>
-          </div>
+          
         </div>
       </div>
-    </div>
+    
 
   );
 };

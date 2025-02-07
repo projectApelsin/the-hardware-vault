@@ -49,26 +49,26 @@ const ProductCard = ({ id, title, price, discountPrice, rating = 0, image }) => 
   };
 
   return (
-    <div className="productCard__container">
-      <div className="productCard__image">
+    <div className="flex flex-col bg-smalt-50 gap-2 relative ">
+      <div className="pt-14 pr-5 pl-5 pb-4 flex justify-center">
         <Link to={`/productDetails/${id}`}>
-          <img src={"/images/" + image} alt={title} className="productCard__image-size" />
+          <img src={"/images/" + image} alt={title} className="w-[228px]" />
         </Link>
         <img
-          className="productCard__favourite"
+          className="absolute top-[16px] right-[16px] cursor-pointer"
           src={isFavorite ? "/icons/heart-filled.svg" : "/icons/heart-empty.svg"}
           alt="Card like icon"
           onClick={handleWishlistToggle}
         />
       </div>
 
-      <div className="productCard__bottom">
-        <div className="productCard__bottom-title">
-          <p className="productCard__bottom-title-text">{title}</p>
+      <div className="flex flex-col gap-5 mr-7 ml-7 pb-3">
+        <div className="flex ">
+          <p className="font-montserrat font-medium text-lg">{title}</p>
         </div>
-        <ul className="productCard__bottom-rating">
+        <ul className="flex flex-row gap-1 justify">
           {allStars.map((star, index) => (
-            <li key={index} className="productCard__bottom-rating-group">
+            <li key={index} className="">
               <img src={"/icons/" + star} alt="star icon" className="productCard__bottom-rating-group-icon" />
             </li>
           ))}
