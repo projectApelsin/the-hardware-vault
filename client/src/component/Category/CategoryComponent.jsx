@@ -26,7 +26,7 @@ const CategoryComponent = () => {
   return (
     <div className="flex flex-row mt-5 justify-center gap-20 mb-15">
       {/* Список категорий */}
-      <div className="bg-gray-100 w-70 p-5">
+      <div className="bg-gray-100 w-70 p-5 rounded-xl">
         <div className="">
           {categories.map((category) => (
             <div
@@ -41,7 +41,7 @@ const CategoryComponent = () => {
                 <img
                   src="/icons/category-icon.svg"
                   alt="Arrow"
-                  className="w-4 h-4"
+                  className="w-4 h-4 "
                 />
               </div>
             </div>
@@ -55,7 +55,7 @@ const CategoryComponent = () => {
           <img
             src="/images/banner.jpg" // Здесь укажите путь к вашему баннеру
             alt="Banner"
-            className=" h-[600px] w-[1000px] "
+            className=" h-[600px] w-[1000px] rounded-2xl"
           />
         </div>
       </div>

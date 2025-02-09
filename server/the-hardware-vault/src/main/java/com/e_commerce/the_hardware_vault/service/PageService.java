@@ -59,6 +59,7 @@ public class PageService {
         productDetailsPageDTO.setRating(product.getAverageRating());
         productDetailsPageDTO.setImage(product.getMainImage());
         productDetailsPageDTO.setOtherImage(product.getOtherPictureUrl());
+        productDetailsPageDTO.setDiscountPrice(productService.calculateDiscountPrice(product.getPrice(),product.getDiscountPercent()));
         List<CharacteristicDTO> characteristics = new ArrayList<>();
         product.getCharacteristicValues().forEach(characteristic -> {
             CharacteristicDTO characteristicDTO = new CharacteristicDTO();

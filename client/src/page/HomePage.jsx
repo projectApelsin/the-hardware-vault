@@ -32,7 +32,7 @@ const HomePage = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div>
+    <div className="">
       {/* Компонент категорий */}
       <CategoryComponent />
 

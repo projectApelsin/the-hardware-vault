@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useMemo } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import SortComponent from "../sort/SortComponent";
-import "./ProductList.scss";
+
 
 const ProductList = ({ productGroup }) => {
   const { title, productCards = [] } = productGroup;
 
   const [sortCriteria, setSortCriteria] = useState(null);
 
-  // ✅ Используем useMemo, чтобы избежать повторных ререндеров
+ 
   const sortedProducts = useMemo(() => {
     if (!sortCriteria) return productCards;
     
@@ -23,20 +23,20 @@ const ProductList = ({ productGroup }) => {
     }
 
     return sorted;
-  }, [sortCriteria, productCards]); // ✅ Отсортированные продукты обновляются только при изменении `sortCriteria` или `productCards`
+  }, [sortCriteria, productCards]);
 
   return (
-    <section className="list">
-      <div className="list__header">
-        <div className="list__header-container">
-          <p className="list__header-title">{title}</p>
+    <section className="flex-col flex">
+      <div className="mt-15 mb-15">
+        <div className="flex-row flex justify-between mr-25 ml-25 items-center">
+          <p className="text-3xl font-montserrat font-semibold">{title}</p>
           <SortComponent sortCriteria={sortCriteria} setSortCriteria={setSortCriteria} />
         </div>
       </div>
-      <div className="list__items">
-        <div className="list__items-container">
+      <div className=" flex justify-center mb-10">
+        <div className="grid grid-cols-4 gap-7 ">
           {sortedProducts.map((product) => (
-            <div className="list__items-card" key={product.id}>
+            <div className="" key={product.id}>
               <ProductCard {...product} />
             </div>
           ))}

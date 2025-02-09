@@ -57,6 +57,7 @@ const ProductDetailsPage = () => {
         productReviews={countReviews}
         productRating={rating}
         productOtherImages={otherImage}
+        productId ={productId}
       />
 
       {/* Блок информации о продукте */}

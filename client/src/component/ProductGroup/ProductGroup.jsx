@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "../ProductCard/ProductCard";
-import "./ProductGroup.scss";
+
 
 const ProductGroup = ({ productGroup }) => {
   if (!productGroup) {
@@ -32,20 +32,20 @@ const ProductGroup = ({ productGroup }) => {
   };
 
   return (
-    <section className="productGroup">
-      <div className="productGroup__header">
-        <div className="productGroup__header-container">
-          <p className="productGroup__header-title">{title}</p>
-          <a className="productGroup__header-link" onClick={handleNavigate}>
-            <p className="productGroup__header-link-text">Перейти</p>
-            <img src="/icons/category-icon.svg" alt="category link icon" />
+    <section className="flex flex-col mb-10">
+      <div className="flex-col flex  mt-20">
+        <div className="flex-row flex justify-between mr-25 ml-25 items-center">
+          <p className="text-3xl font-montserrat font-semibold">{title}</p>
+          <a className="flex flex-row gap-1 items-center cursor-pointer" onClick={handleNavigate}>
+            <p className="text-cm font-montserrat font-medium">Перейти</p>
+            <img src="/icons/category-icon.svg" alt="category link icon" className="w-4 h-4"/>
           </a>
         </div>
-        <div className="productGroup__items">
-          <div className="productGroup__items-container">
+        
+          <div className="flex flex-row gap-10 justify-center mt-15 ">
             {productCards.map((product, index) => (
               <div
-                className="productGroup__items-card category__item"
+                className=""
                 key={product.id || index} // Используем product.id, если его нет - индекс
               >
                 <ProductCard
@@ -59,7 +59,7 @@ const ProductGroup = ({ productGroup }) => {
               </div>
             ))}
           </div>
-        </div>
+        
       </div>
     </section>
   );

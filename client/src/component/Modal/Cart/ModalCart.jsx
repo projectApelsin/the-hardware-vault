@@ -10,7 +10,7 @@ const CartItem = ({ id, image, title, capacity, price, amount, onRemove, onChang
       <img className=" w-[100px] h-[100px]" src={"/images/" + image} alt={title} />
 
       <div className="flex flex-col w-full mr-5">
-        <p className="">{title}</p>
+        <p className="font-medium font-montserrat">{title}</p>
 
         <div className="flex flex-row justify-between mt-3">
           <div className="flex flex-row gap-2">
@@ -97,9 +97,9 @@ const Cart = ({ items, totalAmount, onRemoveItem, onChangeQuantity, onOrder }) =
       <div className="bg-smalt-50 h-30 flex flex-col gap-5 rounded-lg p-4">
         <div className="flex flex-row gap-5">
           <p className="font-medium font-montserrat">Загальна сума:</p>
-          <p className="font-normal font-montserrat">{totalAmount} ₴</p>
+          <p className="font-medium font-montserrat">{totalAmount} ₴</p>
         </div>
-        <button className=" font-montserrat bg-smalt-500 h-10 hover:bg-smalt-600 duration-200 hover:text-white active:bg-smalt-800 active:text-white rounded-md cursor-pointer" onClick={onOrder}>
+        <button className=" font-medium font-montserrat bg-smalt-500 h-10 hover:bg-smalt-600 duration-200 hover:text-white active:bg-smalt-800 active:text-white rounded-md cursor-pointer" onClick={onOrder}>
           Оформити замовлення
         </button>
       </div>

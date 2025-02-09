@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { addToWishlist, deleteFromWishlist, isInWishlist, addToShoppingCart } from '../../config/ApiCustomer';
-import './ProductCard.scss';
+
 
 const ProductCard = ({ id, title, price, discountPrice, rating = 0, image }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -49,43 +49,49 @@ const ProductCard = ({ id, title, price, discountPrice, rating = 0, image }) => 
   };
 
   return (
-    <div className="flex flex-col bg-smalt-50 gap-2 relative ">
-      <div className="pt-14 pr-5 pl-5 pb-4 flex justify-center">
-        <Link to={`/productDetails/${id}`}>
-          <img src={"/images/" + image} alt={title} className="w-[228px]" />
-        </Link>
-        <img
-          className="absolute top-[16px] right-[16px] cursor-pointer"
-          src={isFavorite ? "/icons/heart-filled.svg" : "/icons/heart-empty.svg"}
-          alt="Card like icon"
-          onClick={handleWishlistToggle}
-        />
-      </div>
+    <div className="flex flex-col bg-smalt-50 gap-2 relative w-70 h-115 ">
+  <div className="pt-14 pr-5 pl-5 pb-4 flex justify-center">
+    <Link to={`/productDetails/${id}`}>
+      <img src={"/images/" + image} alt={title} className="w-[228px]" />
+    </Link>
+    <img
+      className="absolute top-[16px] right-[16px] cursor-pointer"
+      src={isFavorite ? "/icons/heart-filled.svg" : "/icons/heart-empty.svg"}
+      alt="Card like icon"
+      onClick={handleWishlistToggle}
+    />
+  </div>
 
-      <div className="flex flex-col gap-5 mr-7 ml-7 pb-3">
-        <div className="flex ">
-          <p className="font-montserrat font-medium text-lg">{title}</p>
-        </div>
-        <ul className="flex flex-row gap-1 justify">
-          {allStars.map((star, index) => (
-            <li key={index} className="">
-              <img src={"/icons/" + star} alt="star icon" className="productCard__bottom-rating-group-icon" />
-            </li>
-          ))}
-        </ul>
-        <div className="productCard__bottom-payment">
-          <div className="productCard__bottom-payment-prices">
-            <p className="productCard__bottom-payment-prices-value">
-              {discountPrice ? `${discountPrice} ₴` : `${price} ₴`}
-            </p>
-            {discountPrice && <p className="productCard__bottom-payment-prices-old">{price} ₴</p>}
-          </div>
-          <div className="productCard__bottom-payment-icon" onClick={handleAddToCart}>
-            <img src="/icons/shopping-cart.svg" alt="Card cart icon" />
-          </div>
-        </div>
+  <div className="flex flex-col gap-5 mr-7 ml-8 pb-3">
+    <div className="flex h-10">
+      <p className="font-montserrat font-medium text-lg">{title}</p>
+    </div>
+    <ul className="flex flex-row gap-1 justify">
+      {allStars.map((star, index) => (
+        <li key={index}>
+          <img src={"/icons/" + star} alt="star icon" className="productCard__bottom-rating-group-icon" />
+        </li>
+      ))}
+    </ul>
+    <div className="flex flex-row justify-between">
+      <div className="flex flex-row gap-4 items-center">
+        <p className="text-xl font-montserrat font-medium">
+          {discountPrice ? `${discountPrice} ₴` : `${price} ₴`}
+        </p>
+        {/* Перечеркнутая старая цена, если есть скидка */}
+        {discountPrice && (
+          <p className="font-montserrat font-medium text-gray-300 text-[17px] line-through">
+            {price} ₴
+          </p>
+        )}
+      </div>
+      <div onClick={handleAddToCart}>
+        <img src="/icons/shopping-cart.svg" alt="Card cart icon" />
       </div>
     </div>
+  </div>
+</div>
+
   );
 };
 

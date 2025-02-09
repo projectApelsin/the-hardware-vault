@@ -108,12 +108,12 @@ const RegisterModal = ({ isOpen, onClose }) => {
           <div className="flex gap-2 flex-col">
             <p className="text-gray-500 font-montserrat">Пароль</p>
             <div className="relative">
-              <input
-                type="password"
+            <input
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Введіть ваш пароль"
-                className="h-8 w-full rounded-md border-solid border-2 border-smalt-800 focus:border-smalt-800 focus:outline-none pl-4"
+                placeholder="Введите ваш пароль"
+                className="h-8 w-full rounded-md border-2 border-smalt-800 focus:border-smalt-800 focus:outline-none pr-10 pl-4"
               />
               <img
                 src={showPassword ? "/icons/eye-open.svg" : "/icons/eye-closed.svg"}
