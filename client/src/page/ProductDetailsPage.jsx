@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchProductDetails } from "../config/ApiPage";
 import ProductTop from "../component/ProductDetails/ProductTopComponent/ProductTopComponent";
-import ProductInfo from "../component/ProductDetails/ProductDescriptionComponent.jsx/ProductDescriptionComponent";
+import ProductInfo from "../component/ProductDetails/ProductDescriptionComponent/ProductDescriptionComponent";
 import ReviewsComponent from "../component/ProductDetails/ProductReviewsComponent/ProductReviewsComponent";
 import ProductGroup from "../component/ProductGroup/ProductGroup";
+import ProductAdditionComponent from "../component/ProductDetails/ProductAdditionComponent";
 
 const ProductDetailsPage = () => {
   const { productId } = useParams(); // Получение ID продукта из пути
@@ -61,7 +62,7 @@ const ProductDetailsPage = () => {
       />
 
       {/* Блок информации о продукте */}
-      <ProductInfo description={description} characteristics={characteristics} />
+      <ProductAdditionComponent description={description} characteristics={characteristics} title={title} price={price} discountPrice={discountPrice} image={image}/>
 
       {/* Блок отзывов */}
      

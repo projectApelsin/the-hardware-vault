@@ -19,38 +19,29 @@ const ProductTop = ({
   const decreaseQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
-  
-    const handleAddToCart = async () => {
-      try {
-        const response = await addToShoppingCart(productId);
-        console.log("Добавлено в корзину:", response);
-      } catch (error) {
-        console.error("Ошибка при добавлении в корзину:", error);
-      }
-    };
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await addToShoppingCart(productId);
+      console.log("Добавлено в корзину:", response);
+    } catch (error) {
+      console.error("Ошибка при добавлении в корзину:", error);
+    }
+  };
 
   return (
 
-    <div className="flex flex-row gap-15 mt-10 mb-20 ml-20 mr-20">
-      <div className="w-150 h-120 ">
-
-        <div className="">
-          <div className="flex justify-center">
-
-            <img className="w-[384px] h-[326px]" src={"/images/" + productImage} alt={productName} />
-
-          </div>
-          <div className="flex flex-row mt-5 justify-center">
-            {productOtherImages.map((img, index) => (
-              <div key={index} className="flex flex-row w-30 justify-center gap-5">
-                <img className="" src={"/images/" + img} alt={`Preview ${index + 1}`} />
-              </div>
-            ))}
-          </div>
+    <div className="flex flex-col md:flex-row gap-8 mt-5 mb-10 mx-5 md:mx-20">
+      <div className="w-full md:w-1/2 flex flex-col items-center">
+        <img className="w-full max-w-md md:max-w-lg h-auto" src={"/images/" + productImage} alt={productName} />
+        <div className="flex flex-wrap justify-center gap-3 mt-5">
+          {productOtherImages.map((img, index) => (
+            <img key={index} className="w-16 h-16 md:w-20 md:h-20 object-cover" src={"/images/" + img} alt={`Preview ${index + 1}`} />
+          ))}
         </div>
       </div>
 
-      <div className="flex flex-col w-150">
+      <div className="flex flex-col w-full md:w-1/2 gap-5">
         <div className='flex flex-col gap-5'>
           <p className="font-montserrat font-bold text-4xl">{productName}</p>
 
@@ -121,7 +112,7 @@ const ProductTop = ({
             />
           </svg>
         </div>
-        <button className="p-3 bg-smalt-500 w-35 font-medium rounded-xl cursor-pointer hover:bg-smalt-600 duration-300 active:bg-smalt-700 hover:text-white font-montserrat" onClick={handleAddToCart}>
+        <button className="p-3 bg-smalt-500 w-35 font-medium rounded-xl cursor-pointer hover:bg-smalt-600 duration-300 active:bg-smalt-700 text-white font-montserrat" onClick={handleAddToCart}>
           В корзину
         </button>
       </div>

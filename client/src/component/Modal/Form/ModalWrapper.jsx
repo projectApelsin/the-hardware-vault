@@ -35,7 +35,7 @@ const ModalWrapper = ({ isOpen, onClose, children }) => {
       transition={{ duration: 0.3 }}
     >
       <motion.div
-        className="modal-content"
+        className=""
         initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.9 }}
