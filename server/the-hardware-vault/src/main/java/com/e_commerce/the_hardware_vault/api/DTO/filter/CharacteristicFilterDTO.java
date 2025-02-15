@@ -7,6 +7,8 @@ import java.util.List;
 @Data
 public class CharacteristicFilterDTO {
 
+    private Integer characteristicId;
+
     private String characteristicName;
 
     private List<CharacteristicValueDTO> values;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./HeaderComponent.scss";
+
 import SearchComponent from "./SearchComponent";
 import ModalLogin from "../Modal/Form/ModalLogin"; // Импорт компонента модального окна для логина
 import ModalRegister from "../Modal/Form/ModalRegistration"; // Импорт компонента модального окна для регистрации
@@ -35,54 +35,53 @@ const HeaderComponent = () => {
   const handleProfileClick = () => openModal("login");
   const handleCartClick = () => openModal("cart");
   const handleWishlistClick = () => navigate("/wishlist");
+  const handleLogoClick = () => navigate("/");
 
   return (
     <>
-      <div className="header">
-        <div className="header__container">
+      
+        <div className="flex flex-row w-full h-25 items-center justify-between pr-10 pl-20 bg-smalt-500">
           {/* Логотип */}
-          <div className="header__logo">
+          <div className="flex flex-col cursor-pointer" onClick={handleLogoClick}>
             <img
               src="/icons/logo-first.svg"
               alt="Логотип первая часть"
-              className="header__logo-first-icon"
+              className="w-[133px] h-[17.5px] "
             />
             <img
               src="/icons/logo-second.svg"
               alt="Логотип вторая часть"
-              className="header__logo-second-icon"
+              className="w-[76px] h-[36px]"
             />
           </div>
 
-          {/* Группа иконок и поиск */}
-          <div className="header__icons-group">
-            {/* Поле поиска */}
+          
             <SearchComponent />
-
+          
             {/* Линейная группа иконок */}
-            <div className="header__icons-group__linear">
+            <div className="flex flex-row gap-10">
               <img
                 src="/icons/heart-empty.svg"
                 alt="Иконка избранного"
-                className="header__icons-group__linear-icon"
+                className="cursor-pointer"
                 onClick={handleWishlistClick}
               />
               <img
                 src="/icons/shopping-cart-black.svg"
                 alt="Иконка корзины"
-                className="header__icons-group__linear-icon"
+                className="cursor-pointer"
                 onClick={handleCartClick}
               />
               <img
                 src="/icons/User.svg"
                 alt="Иконка профиля"
-                className="header__icons-group__linear-icon"
+                className="cursor-pointer"
                 onClick={handleProfileClick}
               />
             </div>
-          </div>
+          
         </div>
-      </div>
+      
 
       {/* Модальное окно логина */}
       {isLoginModalOpen && (

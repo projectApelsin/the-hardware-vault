@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { getWishlistPage } from "../config/ApiCustomer"; // Импорт функции для получения вишлиста
-import ProductList from "../component/ProductList/ProductList"; // Импорт компонента списка продуктов
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { getWishlistPage } from "../config/ApiCustomer";
+import ProductList from "../component/ProductList/ProductList";
 
 const WishlistPage = () => {
   const [wishlist, setWishlist] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const location = useLocation(); // Следим за изменением маршрута
 
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
+        setLoading(true); // Показываем индикатор загрузки перед запросом
         const data = await getWishlistPage();
         setWishlist({
           title: data.title || "Ваші обрані товари",
@@ -24,14 +27,13 @@ const WishlistPage = () => {
     };
 
     fetchWishlist();
-  }, []);
+  }, [location.pathname]); // Перезапуск при изменении маршрута
 
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div>
-      {/* Компонент ProductList для отображения продуктов */}
       {wishlist && <ProductList productGroup={wishlist} />}
     </div>
   );

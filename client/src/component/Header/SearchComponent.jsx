@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { fastSearch } from "../../config/ApiPage"; // Импорт функции
-import "./HeaderComponent.scss";
+
 
 const SearchComponent = () => {
   const [query, setQuery] = useState("");
@@ -66,68 +66,74 @@ const SearchComponent = () => {
 
   return (
     <>
-    <div className="header__icons-group-search-area" ref={searchRef}>
-       <img
-        className={`header__search-icon ${isActive ? "active-icon" : ""}`}
-        src={"/icons/Magnifer.svg"}
-        alt="Search icon"
-      />
-      <input
-        type="text"
-        className={`header__icons-group-search-area-search-line`}
-        placeholder="Пошук"
-        value={query}
-        onChange={handleInputChange}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
-      />
-      </div>
-      {isActive && results.length > 0 && (
-        <div className="search__container">
-          <div className="search__group">
+      <div className="flex flex-col " ref={searchRef}>
+        <div className="flex flex-row bg-smalt-50 w-[674px] h-[45px] rounded-xs gap-3 relative">
+          <img
+            className={`w-[32px] ml-2 ${isActive ? "active-icon" : ""}`}
+            src={"/icons/Magnifer.svg"}
+            alt="Search icon"
+          />
+          <input
+            type="text"
+            className={`outline-none border-0 w-full`}
+            placeholder="Пошук"
+            value={query}
+            onChange={handleInputChange}
+            onFocus={handleFocus}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+        {/** Контейнер с результатами поиска */}
+        <div
+          className={`flex flex-row gap-20 justify-center bg-smalt-500 absolute w-[674px] top-[120px] p-10 rounded-lg shadow-lg 
+  transition-all duration-300 ease-in-out transform ${isActive && results.length > 0 ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
+            }`}
+        >
+          <div className="flex flex-col gap-5">
             {firstGroup.map((product) => (
               <div
                 key={product.id}
-                className="search__card"
+                className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-transform duration-300"
                 onClick={() => handleCardClick(product.id)}
               >
-                <div className="search__card-top">
+                <div>
                   <img
                     src={`/images/${product.image}`}
                     alt={product.title}
-                    className="search__card-icon"
+                    className="rounded-lg"
                   />
                 </div>
-                <div className="search__text">{product.title}</div>
-                <div className="search__text">
+                <div className="text-white font-medium font-montserrat text-lg">{product.title}</div>
+                <div className="text-white font-semibold font-montserrat text-lg">
                   {product.discountPrice || product.price} ₴
                 </div>
               </div>
             ))}
           </div>
-          <div className="search__group">
+          <div className="flex flex-col gap-5">
             {secondGroup.map((product) => (
               <div
                 key={product.id}
-                className="search__card"
+                className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-transform duration-300"
                 onClick={() => handleCardClick(product.id)}
               >
-                <div className="search__card-top">
+                <div>
                   <img
                     src={`/images/${product.image}`}
                     alt={product.title}
-                    className="search__card-icon"
+                    className="rounded-lg"
                   />
                 </div>
-                <div className="search__text">{product.title}</div>
-                <div className="search__text">
+                <div className="text-white font-medium font-montserrat text-lg">{product.title}</div>
+                <div className="text-white font-semibold font-montserrat text-lg">
                   {product.discountPrice || product.price} ₴
                 </div>
               </div>
             ))}
           </div>
         </div>
-      )}
+
+      </div>
     </>
   );
 };

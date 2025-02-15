@@ -1,3 +1,5 @@
-.main-content{
-    background: #F3EEF7;
-}
+.content {
+    min-height: calc(100vh); /* 100% экрана минус высота хедера и футера */
+    display: flex;
+    flex-direction: column;
+  }

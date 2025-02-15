@@ -8,14 +8,20 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const page = 0;
-  const size = 4;
+  // Управляемые состояния для запроса
+  const [budget, setBudget] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
-        const data = await getHomePage(page, size);
-        // Если data — это сразу массив групп, то просто используем его:
+        const requestBody = {
+          budget,
+          categoryId,
+        };
+
+        const data = await getHomePage(requestBody);
         setHomeData(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Ошибка при загрузке домашней страницы:", err);
@@ -26,20 +32,19 @@ const HomePage = () => {
     };
 
     fetchData();
-  }, [page, size]);
+  }, [budget, categoryId]); // Запуск запроса при изменении budget или categoryId
 
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div>
-      {/* Компонент категорий */}
-      <CategoryComponent />
+      {/* Передаём setBudget и setCategoryId в CategoryComponent */}
+      <CategoryComponent setBudget={setBudget} setCategoryId={setCategoryId} />
 
       {/* Отображение групп продуктов */}
-      {Array.isArray(homeData) && homeData.map((group, index) => (
-        <ProductGroup key={index} productGroup={group} />
-      ))}
+      {Array.isArray(homeData) &&
+        homeData.map((group, index) => <ProductGroup key={index} productGroup={group} />)}
     </div>
   );
 };
