@@ -5,17 +5,18 @@ import { getReviews, addReview } from "../../../config/ApiCustomer";
 const ReviewWriteComponent = ({ newReview, setNewReview, handleInputChange, handleRatingChange, handleSubmitReview, setWriteReview, errorMessage }) => {
   return (
     <div className="bg-smalt-100 p-5 flex flex-col rounded-2xl mt-10">
-      <div className="">
-        <div className="">
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2">
           <input
             type="text"
-            name="username"
+            name="firstName"
             placeholder="Ваше ім'я"
-            value={newReview.username}
+            value={newReview.firstName}
             onChange={handleInputChange}
-            className="reviews__frame-body-review-group-header-title-username-input"
+            className="h-10 rounded-md font-montserrat font-semibold focus:outline-none pl-4"
           />
-          <div className="flex flex-row gap-0.5">
+
+          <div className="flex flex-row gap-0.5 ml-3.5">
             {Array.from({ length: 5 }).map((_, i) => (
               <img
                 key={i}
@@ -28,18 +29,22 @@ const ReviewWriteComponent = ({ newReview, setNewReview, handleInputChange, hand
           </div>
         </div>
         <textarea
-          name="text"
+          name="reviewText"
           placeholder="Напишіть ваш відгук"
-          value={newReview.text}
+          value={newReview.reviewText}
           onChange={handleInputChange}
-          className="reviews__frame-body-review-group-content-textarea"
+          className="rounded-md font-montserrat font-normal focus:outline-none pl-4"
         />
+
+
+        <div className="flex justify-end">
+          <button className="p-3 border-2 w-50 border-smalt-500 font-medium rounded-xl cursor-pointer hover:bg-smalt-600 hover:border-smalt-600 duration-300 active:bg-smalt-700 active:border-smalt-700 hover:text-white font-montserrat" onClick={handleSubmitReview}>
+            <p className="font-montserrat">Надіслати відгук</p>
+          </button>
+        </div>
+        {errorMessage && <p className="reviews__frame-body-review-group-error">{errorMessage}</p>}
+        <button className="flex justify-end font-montserrat text-sm text-gray-500 mt-2" onClick={() => setWriteReview(false)}>Скасувати</button>
       </div>
-      <button className="reviews__frame-header-button" onClick={handleSubmitReview}>
-        <p className="reviews__frame-header-button-text">Надіслати відгук</p>
-      </button>
-      {errorMessage && <p className="reviews__frame-body-review-group-error">{errorMessage}</p>}
-      <button className="text-sm text-gray-500 mt-2" onClick={() => setWriteReview(false)}>Скасувати</button>
     </div>
   );
 };
@@ -47,7 +52,7 @@ const ReviewWriteComponent = ({ newReview, setNewReview, handleInputChange, hand
 const ReviewsComponent = ({ productId }) => {
   const [reviews, setReviews] = useState([]);
   const [writeReview, setWriteReview] = useState(false);
-  const [newReview, setNewReview] = useState({ username: "", rating: 0, text: "" });
+  const [newReview, setNewReview] = useState({ firstName: "", rating: 0, reviewText: "" });
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
@@ -72,14 +77,14 @@ const ReviewsComponent = ({ productId }) => {
   };
 
   const handleSubmitReview = async () => {
-    if (!newReview.username || !newReview.text || newReview.rating === 0) {
+    if (!newReview.firstName || !newReview.reviewText || newReview.rating === 0) {
       setErrorMessage("Будь ласка, заповніть усі поля.");
       return;
     }
     try {
       await addReview(productId, newReview);
       setReviews((prev) => [newReview, ...prev]);
-      setNewReview({ username: "", rating: 0, text: "" });
+      setNewReview({ firstName: "", rating: 0, reviewText: "" });
       setErrorMessage(null);
       setWriteReview(false);
     } catch (error) {
@@ -92,10 +97,11 @@ const ReviewsComponent = ({ productId }) => {
       <div className="flex flex-row justify-between items-center">
         <p className="font-montserrat font-semibold text-2xl">Відгуки</p>
         <button
-          className="p-3 border-2 border-smalt-500 font-medium rounded-xl cursor-pointer hover:bg-smalt-600 hover:border-smalt-600 duration-300 active:bg-smalt-700 active:border-smalt-700 hover:text-white font-montserrat"
+          className="p-3 border-2 border-smalt-500 font-medium rounded-xl cursor-pointer
+           hover:bg-smalt-600 hover:border-smalt-600 duration-300 active:bg-smalt-700 active:border-smalt-700 hover:text-white font-montserrat"
           onClick={() => setWriteReview(true)}
         >
-          <p className="reviews__frame-header-button-text">Написати відгук</p>
+          <p className="font-montserrat">Написати відгук</p>
         </button>
       </div>
 
@@ -111,35 +117,37 @@ const ReviewsComponent = ({ productId }) => {
         />
       )}
 
-      <div className="reviews__frame-body">
+      <div className="mt-10 gap-10 flex flex-col ">
         {reviews.length === 0 ? (
           <p className="text-gray-500">Поки що немає відгуків</p>
         ) : (
           reviews.map((review, index) => (
-            <div key={index} className="reviews__frame-body-review">
-              <div className="reviews__frame-body-review-group">
-                <div className="reviews__frame-body-review-group-header">
-                  <p className="reviews__frame-body-review-group-header-title-username-text">
-                    {review.username}
+            <div key={index} className="flex flex-col gap-5 bg-smalt-100 rounded-xl pl-10 pr-10 pt-5 pb-10">
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-row justify-between">
+                  <p className="font-montserrat font-semibold text-xl">
+                    {review.firstName}
                   </p>
-                  <div className="reviews__frame-body-review-group-header-rating">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <img
-                        key={i}
-                        src={i < review.rating ? "/icons/filled-star.svg" : "/icons/empty-star.svg"}
-                        alt="rating star"
-                        className="reviews__frame-body-review-group-header-rating-icon"
-                      />
-                    ))}
-                  </div>
                   <p className="reviews__frame-body-review-group-header-date">
                     {new Date().toLocaleDateString("uk-UA")}
                   </p>
                 </div>
-                <div className="reviews__frame-body-review-group-content">
-                  <p className="reviews__frame-body-review-group-content-text">{review.text}</p>
+                <div className="flex flex-row gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <img
+                      key={i}
+                      src={i < review.rating ? "/icons/filled-star.svg" : "/icons/empty-star.svg"}
+                      alt="rating star"
+                      
+                    />
+                  ))}
                 </div>
               </div>
+
+              <div className="">
+                <p className="font-montserrat font-normal text-lg">{review.reviewText}</p>
+              </div>
+
             </div>
           ))
         )}

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCategoryTitles } from "../../config/ApiPage"; // Импорт функции получения категорий
+import RecommendationFilterComponent from "../RecommendationFilterComponent";
 
-
-const CategoryComponent = () => {
+const CategoryComponent = ({ setBudget, setCategoryId }) => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
@@ -24,41 +24,46 @@ const CategoryComponent = () => {
   };
 
   return (
-    <div className="flex flex-row mt-5 justify-center gap-20 mb-15">
-      {/* Список категорий */}
-      <div className="bg-gray-100 w-70 p-5 rounded-xl">
-        <div className="">
-          {categories.map((category) => (
-            <div
-              key={category.id}
-              className="flex flex-row justify-between cursor-pointer"
-              onClick={() => handleCategoryClick(category.id)}
-            >
-              <p className="category__category-content-frame-group-title">
-                {category.title}
-              </p>
-              <div className="category__category-content-frame-group-icon">
-                <img
-                  src="/icons/category-icon.svg"
-                  alt="Arrow"
-                  className="w-4 h-4 "
-                />
+    <div className="flex flex-col">
+      <div className="flex flex-row mt-5 justify-center gap-20 mb-15">
+        {/* Список категорий */}
+        <div className="bg-gray-100 w-70 p-5 rounded-xl">
+          <div className="">
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                className="flex flex-row justify-between cursor-pointer"
+                onClick={() => handleCategoryClick(category.id)}
+              >
+                <p className="category__category-content-frame-group-title">
+                  {category.title}
+                </p>
+                <div className="category__category-content-frame-group-icon">
+                  <img
+                    src="/icons/category-icon.svg"
+                    alt="Arrow"
+                    className="w-4 h-4 "
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Баннер */}
-      <div className="category__banner-group">
-        <div className="category__banner-group-frame">
-          <img
-            src="/images/banner.jpg" // Здесь укажите путь к вашему баннеру
-            alt="Banner"
-            className=" h-[600px] w-[1000px] rounded-2xl"
-          />
+        {/* Баннер */}
+        <div className="category__banner-group">
+          <div className="category__banner-group-frame">
+            <img
+              src="/images/banner.jpg" // Здесь укажите путь к вашему баннеру
+              alt="Banner"
+              className=" h-[600px] w-[1000px] rounded-2xl"
+            />
+          </div>
         </div>
+
       </div>
+      <RecommendationFilterComponent setBudget={setBudget} setCategoryId={setCategoryId} 
+      categories={categories}/>
     </div>
   );
 };

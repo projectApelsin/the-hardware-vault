@@ -150,7 +150,7 @@ public class CustomerService implements UserDetailsService {
         return ResponseEntity.ok("Product removed from wishlist");
     }
 
-    public ResponseEntity<String> addToShoppingCart(Integer customerId, Integer productId) {
+    public ResponseEntity<String> addToShoppingCart(Integer customerId, Integer productId, Integer quantity) {
         Customer customer = customerRepository.findById(customerId).orElse(null);
         if (customer == null) {
             return ResponseEntity.status(404).body("Customer not found");
@@ -161,7 +161,7 @@ public class CustomerService implements UserDetailsService {
             return ResponseEntity.status(409).body("Product already in shopping cart");
         }
 
-        shoppingCart.put(productId, 1);
+        shoppingCart.put(productId, quantity);
         customer.setShoppingCart(shoppingCart);
         customerRepository.save(customer);
         return ResponseEntity.ok("Product added to shopping cart");
@@ -250,7 +250,8 @@ public class CustomerService implements UserDetailsService {
     }
 
 
-    public Boolean isInWishlist(Integer productId) {
-        return customerRepository.findById(productId).get().getWishlist().contains(productId);
+    public Boolean isInWishlist(Integer productId, Integer customerId) {
+        Customer customer = customerRepository.findById(customerId).get();
+        return customer.getWishlist().contains(productId);
     }
 }

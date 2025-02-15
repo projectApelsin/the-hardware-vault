@@ -22,7 +22,7 @@ const ProductTop = ({
 
   const handleAddToCart = async () => {
     try {
-      const response = await addToShoppingCart(productId);
+      const response = await addToShoppingCart(productId, quantity);
       console.log("Добавлено в корзину:", response);
     } catch (error) {
       console.error("Ошибка при добавлении в корзину:", error);
@@ -41,7 +41,7 @@ const ProductTop = ({
         </div>
       </div>
 
-      <div className="flex flex-col w-full md:w-1/2 gap-5">
+      <div className="flex flex-col w-full md:w-1/2 gap-5 mt-15">
         <div className='flex flex-col gap-5'>
           <p className="font-montserrat font-bold text-4xl">{productName}</p>
 

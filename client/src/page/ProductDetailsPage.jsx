@@ -62,7 +62,15 @@ const ProductDetailsPage = () => {
       />
 
       {/* Блок информации о продукте */}
-      <ProductAdditionComponent description={description} characteristics={characteristics} title={title} price={price} discountPrice={discountPrice} image={image}/>
+      <ProductAdditionComponent
+        description={description} 
+        characteristics={characteristics}
+        title={title}
+        price={price} 
+        discountPrice={discountPrice}
+        image={image}
+        productId={productId}
+          />
 
       {/* Блок отзывов */}
      
@@ -73,7 +81,9 @@ const ProductDetailsPage = () => {
             id: productGroup.id,
             title: productGroup.title,
             productCards: productGroup.productCards.slice(0, 4), // Ограничение до 4 продуктов
+            groupType: productGroup.groupType,
           }}
+          productId={productId}
         />
       )}
     </div>

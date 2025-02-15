@@ -36,17 +36,19 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.deleteFromWishlist(customerService.getCustomerIdFromRequest(request), productId));
     }
     @GetMapping("/isInWishlist/{productId}")
-    public ResponseEntity<Boolean> isInWishlist(@PathVariable Integer productId){
-        return ResponseEntity.ok().body(customerService.isInWishlist(productId));
+    public ResponseEntity<Boolean> isInWishlist(@PathVariable Integer productId, HttpServletRequest request ){
+
+
+        return ResponseEntity.ok().body(customerService.isInWishlist(productId,customerService.getCustomerIdFromRequest(request)));
     }
 
     @PostMapping("/addToShoppingCart/{productId}")
-    public ResponseEntity<?> addToShoppingCart(HttpServletRequest request, @PathVariable Integer productId) {
+    public ResponseEntity<?> addToShoppingCart(HttpServletRequest request, @PathVariable Integer productId, @RequestParam Integer quantity) {
         if (productId == null || productId <= 0) {
             return ResponseEntity.badRequest().body("Invalid product ID");
         }
 
-        return ResponseEntity.ok(customerService.addToShoppingCart(customerService.getCustomerIdFromRequest(request), productId));
+        return ResponseEntity.ok(customerService.addToShoppingCart(customerService.getCustomerIdFromRequest(request), productId, quantity));
     }
 
     @DeleteMapping("/deleteFromShoppingCart/{productId}")

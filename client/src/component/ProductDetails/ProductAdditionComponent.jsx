@@ -12,6 +12,7 @@ const ProductAdditionComponent = ({
     title,
     discountPrice,
     price,
+    productId,
     
   }) => {
     const [activeTab, setActiveTab] = useState("description")
@@ -35,7 +36,7 @@ const ProductAdditionComponent = ({
                 <div className='max-w-5xl'>
                 {activeTab === "description" && <ProductDescriptionComponent description={description} characteristics={characteristics}/>}
                 {activeTab === "characteristics" && <ProductCharacteristicComponent characteristics={characteristics}/> }
-                {activeTab === "reviews" && <ProductReviewsComponent/>}
+                {activeTab === "reviews" && <ProductReviewsComponent productId={productId}/>}
                 </div>
                 <div className=' min-w-xl h-75'>
                 <ProductBuyCard image={image} title={title} price={price} discountPrice={discountPrice}/>

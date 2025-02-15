@@ -1,63 +1,77 @@
 import React, { useState, useEffect } from "react";
-import "./FilterCharacterisctic.scss"; // Подключение стилей
-import { getSortCharacteristics } from "../../config/ApiPage"; // Импорт функции API
+import { getSortCharacteristics, getSearchSortCharacteristics } from "../../config/ApiPage";
 
-const Filter = ({ categoryId, onFilterChange }) => {
+const FilterCharacteristic = ({ categoryId, query, onFilterChange }) => {
   const [characteristics, setCharacteristics] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({});
 
   useEffect(() => {
+    if (!categoryId && !query) return; // Если нет categoryId и query, не делать запрос
+
     const fetchCharacteristics = async () => {
       try {
-        const data = await getSortCharacteristics(categoryId);
+        let data;
+        if (query) {
+          // Если query есть, выполняем запрос по query
+          data = await getSearchSortCharacteristics(query);
+        } else if (categoryId) {
+          // Если query нет, но есть categoryId, выполняем запрос по categoryId
+          data = await getSortCharacteristics(categoryId);
+        }
         setCharacteristics(data);
       } catch (error) {
-        console.error("Error fetching sort characteristics:", error);
+        console.error("Ошибка загрузки характеристик:", error);
       }
     };
 
-    if (categoryId) fetchCharacteristics();
-  }, [categoryId]);
+    fetchCharacteristics();
+  }, [categoryId, query]); // Добавляем query в зависимость
 
-  const handleFilterChange = (characteristicId, valueId) => {
+  const handleFilterChange = (characteristicName, valueId) => {
     setSelectedFilters((prev) => {
       const updatedFilters = { ...prev };
-      if (updatedFilters[characteristicId] === valueId) {
-        delete updatedFilters[characteristicId]; // Remove filter if already selected
+      if (updatedFilters[characteristicName]) {
+        // Если фильтр уже есть, проверяем, выбран ли данный фильтр
+        const isSelected = updatedFilters[characteristicName].includes(valueId);
+        if (isSelected) {
+          // Убираем значение
+          updatedFilters[characteristicName] = updatedFilters[characteristicName].filter(id => id !== valueId);
+        } else {
+          // Добавляем значение
+          updatedFilters[characteristicName].push(valueId);
+        }
       } else {
-        updatedFilters[characteristicId] = valueId; // Add new filter
+        // Если фильтр еще не существует, добавляем новый
+        updatedFilters[characteristicName] = [valueId];
       }
-      onFilterChange(updatedFilters); // Notify parent component
+      onFilterChange(updatedFilters); // Передаем обновленные фильтры в родительский компонент
       return updatedFilters;
     });
   };
 
   return (
-    <div className="filter__container">
+    <div className="flex flex-col gap-10 w-90">
       {characteristics.map((char) => (
-        <div key={char.id} className="filter__characteristic">
-          <p className="filter__characteristic-text">{char.name}</p>
-          <div className="filter__characteristic-group">
-            {char.values.map((value) => (
-              <div
-                key={value.id}
-                className={`filter__characteristic-group-value-row ${
-                  selectedFilters[char.id] === value.id ? "selected" : ""
-                }`}
-                onClick={() => handleFilterChange(char.id, value.id)}
-              >
-                <div className="filter__characteristic-group-value-row-icon">
-                  <input
-                    type="checkbox"
-                    checked={selectedFilters[char.id] === value.id}
-                    readOnly
+        <div key={char.characteristicName} className="bg-smalt-100 rounded-2xl p-7 flex flex-col gap-5">
+          <p className="font-montserrat font-semibold text-xl">{char.characteristicName}</p>
+          <div className="flex flex-row flex-wrap gap-4">
+            {char.values.map((value) => {
+              const isSelected = selectedFilters[char.characteristicName]?.includes(value.valueId);
+              return (
+                <div
+                  key={value.valueId}  // Используем уникальный ключ для каждого значения
+                  className="flex items-center gap-2 cursor-pointer justify-between"
+                  onClick={() => handleFilterChange(char.characteristicName, value.valueId)}
+                >
+                  <img
+                    src={isSelected ? "/icons/checkbox-fill.png" : "/icons/carbon-checkbox.png"}
+                    alt="checkbox"
+                    className="w-4 h-4 object-contain duration-500"
                   />
+                  <span className="font-normal">{value.valueTitle}</span>
                 </div>
-                <span className="filter__characteristic-group-value-row-text-main">
-                  {value.name}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       ))}
@@ -65,4 +79,4 @@ const Filter = ({ categoryId, onFilterChange }) => {
   );
 };
 
-export default Filter;
+export default FilterCharacteristic;

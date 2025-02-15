@@ -10,7 +10,7 @@ const ProductBuyCard = ({ image, title, price, discountPrice, }) => {
 
   const handleAddToCart = async () => {
     try {
-      const response = await addToShoppingCart(productId);
+      const response = await addToShoppingCart(productId, quantity);
       console.log("Добавлено в корзину:", response);
     } catch (error) {
       console.error("Ошибка при добавлении в корзину:", error);

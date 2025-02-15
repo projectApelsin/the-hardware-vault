@@ -3,33 +3,44 @@ import { useNavigate } from "react-router-dom";
 import ProductCard from "../ProductCard/ProductCard";
 
 
-const ProductGroup = ({ productGroup }) => {
+const ProductGroup = ({ productGroup, productId }) => {
   if (!productGroup) {
     console.warn("Проп productGroup не передан в компонент ProductGroup");
     return null;
   }
-
-  const { title, productCards, groupType, id } = productGroup;
   const navigate = useNavigate();
-
+  const { title, productCards, groupType, id } = productGroup;
+  
   const handleNavigate = () => {
+    console.log("Тип группы:", groupType); // Проверяем, что передаётся
+    
+    if (!groupType) {
+      console.warn("Ошибка: groupType отсутствует в productGroup", productGroup);
+      return;
+    }
+    let path = "";
     switch (groupType) {
-      case "SUBCATEGORY":
-        navigate(`/subcategory/${id}`);
+      case "SIMILAR":
+        path = "/homePageCategoryDetails/similar";
         break;
       case "RECOMMENDATION":
-        navigate("/homePageCategoryDetails/recommended");
+        path = "/homePageCategoryDetails/recommended";
         break;
       case "DISCOUNT":
-        navigate("/homePageCategoryDetails/discount");
+        path = "/homePageCategoryDetails/discount";
         break;
       case "BESTSELLER":
-        navigate("/homePageCategoryDetails/bestSeller");
+        path = "/homePageCategoryDetails/bestSeller";
         break;
       default:
         console.warn("Неизвестный тип группы: ", groupType);
+        return;
     }
+  
+    // Передаём productId в состояние
+    navigate(path, { state: { productId } });
   };
+  
 
   return (
     <section className="flex flex-col mb-10">

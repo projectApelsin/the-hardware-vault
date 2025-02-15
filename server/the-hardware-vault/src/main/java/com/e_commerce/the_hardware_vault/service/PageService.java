@@ -9,14 +9,8 @@ import com.e_commerce.the_hardware_vault.api.DTO.product.ProductCardDTO;
 import com.e_commerce.the_hardware_vault.api.DTO.product.ProductDetailsPageDTO;
 import com.e_commerce.the_hardware_vault.api.DTO.product.ProductGroupDTO;
 import com.e_commerce.the_hardware_vault.api.Enum.GroupType;
-import com.e_commerce.the_hardware_vault.model.Category;
-import com.e_commerce.the_hardware_vault.model.CharacteristicValue;
-import com.e_commerce.the_hardware_vault.model.Customer;
-import com.e_commerce.the_hardware_vault.model.Product;
-import com.e_commerce.the_hardware_vault.model.repository.CategoryRepository;
-import com.e_commerce.the_hardware_vault.model.repository.CustomerRepository;
-import com.e_commerce.the_hardware_vault.model.repository.ProductRepository;
-import com.e_commerce.the_hardware_vault.model.repository.ReviewRepository;
+import com.e_commerce.the_hardware_vault.model.*;
+import com.e_commerce.the_hardware_vault.model.repository.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,17 +29,18 @@ public class PageService {
     private final CustomerRepository customerRepository;
 
     private final CategoryRepository categoryRepository;
-
+    private final CharacteristicRepository characteristicRepository;
 
     public PageService(ProductRepository productRepository, ReviewRepository reviewRepository, ProductService productService, CustomerRepository customerRepository,
 
-                       CategoryRepository categoryRepository) {
+                       CategoryRepository categoryRepository, CharacteristicRepository characteristicRepository) {
         this.productRepository = productRepository;
         this.reviewRepository = reviewRepository;
         this.productService = productService;
         this.customerRepository = customerRepository;
 
         this.categoryRepository = categoryRepository;
+        this.characteristicRepository = characteristicRepository;
     }
 
     public ProductDetailsPageDTO getProductDetails(Integer productId, Pageable pageable) {
@@ -73,7 +68,7 @@ public class PageService {
 
         productDetailsPageDTO.setProductGroup(ProductService.toProductGroupDTO(productRepository
                         .findSimilarProductsById(productId, pageable).toList(),
-                "Схожі ігри", null));
+                "Схожі ігри", null, GroupType.SIMILAR));
 
         return productDetailsPageDTO;
     }
@@ -84,6 +79,12 @@ public class PageService {
         List<ProductGroupDTO> productGroupDTOList = new ArrayList<>();
 
         productGroupDTOList.add(ProductService.toProductGroupDTO(
+                getRecommendedProducts(customerId, recommendationFilterDTO.getCategoryId(),
+                        recommendationFilterDTO.getBudget(), pageable).toList(),
+                "Рекомендовані товари", null, GroupType.RECOMMENDATION
+        ));
+
+        productGroupDTOList.add(ProductService.toProductGroupDTO(
                 productRepository.findPopularProducts(pageable).toList(),
                 "Бестселлери", null, GroupType.BESTSELLER
         ));
@@ -92,16 +93,13 @@ public class PageService {
                 productRepository.findDiscountedProducts(pageable).toList(),
                 "Акції", null, GroupType.DISCOUNT
         ));
-        if (customerId == null) {
-            productGroupDTOList.add(ProductService.toProductGroupDTO(
-                    getRecommendedProducts(customerId, recommendationFilterDTO.getCategoryId(),
-                            recommendationFilterDTO.getBudget(), pageable).toList(),
-                    "Рекомендовані товари", null, GroupType.RECOMMENDATION
-            ));
-        }
+
+
 
         return productGroupDTOList;
     }
+
+
 
     public Page<Product> getRecommendedProducts(Integer customerId, Integer categoryId, Integer budget, Pageable pageable) {
         // Если не задан ни бюджет, ни категория:
@@ -137,6 +135,9 @@ public class PageService {
                 return ProductService.toProductGroupDTO(getRecommendedProducts(customerId,
                         recommendationFilterDTO.getCategoryId(), recommendationFilterDTO.getBudget(),
                         pageable).toList(), "Товари для вас", null);
+            case "similar":
+                return ProductService.toProductGroupDTO(productRepository.findSimilarProductsById(recommendationFilterDTO.getProductId(),
+                        pageable).toList(), "Схожі товари", null);
             case "discount":
                 return ProductService.toProductGroupDTO(
                         productRepository.findDiscountedProducts(pageable).toList(),
@@ -152,44 +153,38 @@ public class PageService {
         }
     }
 
-
-    // TODO реализовать
-    // TODO реализовать
-    public ProductGroupDTO getCategoryPage(Integer categoryId, List<CharacteristicValueDTO> selectedCharacteristicValueIds) {
+    public ProductGroupDTO getCategoryPage(Integer categoryId, List<CharacteristicFilterDTO> characteristicFilterDTOList) {
         // Получаем категорию из репозитория
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Category not found"));
 
+        // Собираем ID выбранных характеристик
+        List<Integer> selectedCharacteristicValueIds = characteristicFilterDTOList.stream()
+                .flatMap(characteristicFilterDTO -> characteristicFilterDTO.getValues().stream()) // Получаем все значения характеристик
+                .map(CharacteristicValueDTO::getValueId) // Извлекаем ID значений характеристик
+                .collect(Collectors.toList());
+
         // Получаем все продукты категории
         List<Product> products = category.getProducts();
 
-        // Если фильтры выбраны, применяем их
-        if (selectedCharacteristicValueIds != null && !selectedCharacteristicValueIds.isEmpty()) {
+        // Если выбраны фильтры, фильтруем товары
+        if (!selectedCharacteristicValueIds.isEmpty()) {
             products = filterProductsByCharacteristics(products, selectedCharacteristicValueIds);
         }
 
-
         return ProductService.toProductGroupDTO(products, category.getTitle(), categoryId);
     }
-    private List<Product> filterProductsByCharacteristics(List<Product> products, List<CharacteristicValueDTO> selectedCharacteristicValueDTOs) {
-        // Извлекаем список ID значений характеристик из DTO
-        Set<Integer> selectedCharacteristicValueIds = selectedCharacteristicValueDTOs.stream()
-                .map(CharacteristicValueDTO::getValueId) // Извлекаем valueId из DTO
-                .collect(Collectors.toSet());
+
+    private List<Product> filterProductsByCharacteristics(List<Product> products, List<Integer> selectedCharacteristicValueIds) {
+        Set<Integer> selectedIdsSet = new HashSet<>(selectedCharacteristicValueIds);
 
         return products.stream()
-                .filter(product -> {
-                    // Получаем ID всех характеристик продукта
-                    Set<Integer> productCharacteristicValueIds = product.getCharacteristicValues()
-                            .stream()
-                            .map(CharacteristicValue::getId) // Извлекаем ID характеристик продукта
-                            .collect(Collectors.toSet());
-
-                    // Проверяем, содержит ли продукт все выбранные значения
-                    return productCharacteristicValueIds.containsAll(selectedCharacteristicValueIds);
-                })
+                .filter(product -> product.getCharacteristicValues().stream()
+                        .map(CharacteristicValue::getId)
+                        .anyMatch(selectedIdsSet::contains)) // Проверяем, есть ли хотя бы одно совпадение
                 .collect(Collectors.toList());
     }
+
 
 
     public ProductGroupDTO getWishlistPage(Integer customerId) {
@@ -203,10 +198,20 @@ public class PageService {
     }
 
 
-    public ProductGroupDTO getSearchResultPage(String query, Pageable pageable) {
-        return ProductService.toProductGroupDTO(productRepository.findAllByTitleLike(query, pageable).toList(),
-                "Результати Вашого пошуку", null);
+    public ProductGroupDTO getSearchResultPage(String query, List<CharacteristicFilterDTO> characteristicFilterDTOList,Pageable pageable) {
+        List<Product> products = productRepository.findAllByTitleLike(query, pageable).toList();
+
+        List<Integer> selectedCharacteristicValueIds = characteristicFilterDTOList.stream()
+                .flatMap(characteristicFilterDTO -> characteristicFilterDTO.getValues().stream()) // Получаем все значения характеристик
+                .map(CharacteristicValueDTO::getValueId) // Извлекаем ID значений характеристик
+                .collect(Collectors.toList());
+
+        if (!selectedCharacteristicValueIds.isEmpty()) {
+            products = filterProductsByCharacteristics(products, selectedCharacteristicValueIds);
+        }
+        return ProductService.toProductGroupDTO(products,"Результат Вашого пошуку:", null, null);
     }
+
     public List<CharacteristicFilterDTO> getCategoryCharacteristic(Integer categoryId){
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("Category not found"));
@@ -215,6 +220,7 @@ public class PageService {
 
         category.getCharacteristics().forEach(characteristic -> {
             CharacteristicFilterDTO characteristicFilterDTO = new CharacteristicFilterDTO();
+            characteristicFilterDTO.setCharacteristicId(characteristic.getId());
             characteristicFilterDTO.setCharacteristicName(characteristic.getTitle());
 
             List<CharacteristicValueDTO> valueDTOList = characteristic.getCharacteristicValues().stream()
@@ -232,6 +238,50 @@ public class PageService {
 
         return characteristicFilterDTOList;
     }
+
+    public List<CharacteristicFilterDTO> getSearchCharacteristic(String query, Pageable pageable) {
+        List<CharacteristicFilterDTO> characteristicFilterDTOList = new ArrayList<>();
+        Map<Integer, Integer> characteristicCountMap = new HashMap<>(); // Для подсчета частоты характеристик
+
+        // Ищем все продукты по запросу
+        productRepository.findAllByTitleLike(query, pageable).forEach(product -> {
+            // Перебираем все характеристики для каждого продукта
+            product.getCharacteristicValues().forEach(characteristicValue -> {
+                // Если характеристика уже добавлена в список, увеличиваем её счётчик
+                characteristicCountMap.put(characteristicValue.getCharacteristic().getId(), characteristicCountMap.getOrDefault(characteristicValue.getId(), 0) + 1);
+            });
+        });
+
+        // Создаем список характеристик из мапы, сортируя по частоте появления
+        characteristicCountMap.entrySet().stream()
+                .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Сортируем по убыванию частоты
+                .forEach(entry -> {
+                    // Найдем характеристику по её ID и добавим в список
+                    Characteristic characteristic = characteristicRepository.findById(entry.getKey())
+                            .orElseThrow(() -> new RuntimeException("Характеристика не найдена"));
+
+                    // Преобразуем характеристику в DTO
+                    CharacteristicFilterDTO dto = new CharacteristicFilterDTO();
+                    dto.setCharacteristicId(characteristic.getId());
+                    dto.setCharacteristicName(characteristic.getTitle());
+
+                    // Преобразуем значения характеристик в DTO
+                    List<CharacteristicValueDTO> characteristicValues = characteristic.getCharacteristicValues().stream()
+                            .map(value -> {
+                                CharacteristicValueDTO valueDTO = new CharacteristicValueDTO();
+                                valueDTO.setValueId(value.getId());
+                                valueDTO.setValueTitle(value.getTitle());
+                                return valueDTO;
+                            })
+                            .collect(Collectors.toList());
+
+                    dto.setValues(characteristicValues);
+                    characteristicFilterDTOList.add(dto);
+                });
+
+        return characteristicFilterDTOList;
+    }
+
 
     public List<ProductCardDTO> getFastSearchResult(String query, Pageable pageable) {
         List<ProductCardDTO> productCardDTOList = new ArrayList<>();

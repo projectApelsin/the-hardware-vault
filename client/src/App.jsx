@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import HeaderComponent from "./component/Header/HeaderComponent";
@@ -7,8 +6,10 @@ import ProductDetailsPage from "./page/ProductDetailsPage";
 import WishlistPage from "./page/WishlistPage";
 import HomePage from "./page/HomePage";
 import CategoryPage from "./page/CategoryPage";
+import GroupPage from "./page/GroupPage"; // Подключаем новый компонент
 
 import "./App.css";
+import SearchResultPage from "./page/SearchResultPage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -18,69 +19,67 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route
           path="/"
-          element={
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <HomePage />
-            </motion.div>
-          }
+          element={<PageWrapper><HomePage /></PageWrapper>}
         />
         <Route
           path="/productDetails/:productId"
-          element={
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ProductDetailsPage />
-            </motion.div>
-          }
+          element={<PageWrapper><ProductDetailsPage /></PageWrapper>}
         />
         <Route
           path="/wishlist"
-          element={
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <WishlistPage />
-            </motion.div>
-          }
+          element={<PageWrapper><WishlistPage /></PageWrapper>}
         />
         <Route
-          path="/category/:id"
-          element={
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-            >
-              <CategoryPage />
-            </motion.div>
-          }
+          path="/category/:categoryId"
+          element={<PageWrapper><CategoryPage /></PageWrapper>}
+        />
+
+        {/* Новые маршруты для GroupPage */}
+        <Route
+          path="/homePageCategoryDetails/recommended"
+          element={<PageWrapper><GroupPage /></PageWrapper>}
+        />
+        <Route
+          path="/homePageCategoryDetails/similar"
+          element={<PageWrapper><GroupPage /></PageWrapper>}
+        />
+        <Route
+          path="/homePageCategoryDetails/discount"
+          element={<PageWrapper><GroupPage /></PageWrapper>}
+        />
+        <Route
+          path="/homePageCategoryDetails/bestSeller"
+          element={<PageWrapper><GroupPage /></PageWrapper>}
+        />
+        <Route
+          path="/search/:query"
+          element={<PageWrapper><SearchResultPage /></PageWrapper>}
         />
       </Routes>
     </AnimatePresence>
   );
 }
 
+// Компонент-обертка для анимаций
+const PageWrapper = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    transition={{ duration: 0.3 }}
+  >
+    {children}
+  </motion.div>
+);
+
 function App() {
   return (
     <Router>
-      <HeaderComponent /> {/* Фиксированный хедер */}
+      <HeaderComponent />
       <div className="content">
         <AnimatedRoutes />
       </div>
-      <FooterComponent /> {/* Фиксированный футер */}
+      <FooterComponent />
     </Router>
   );
 }

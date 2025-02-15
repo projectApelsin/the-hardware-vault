@@ -46,18 +46,20 @@ export async function deleteFromWishlist(productId) {
     throw error;
   }
 }
-
-// Добавить продукт в корзину
-export async function addToShoppingCart(productId) {
+// Добавить продукт в корзину с указанием количества
+export async function addToShoppingCart(productId, quantity = 1) {
   try {
-    const response = await ApiConfig.post(`/api/customer/addToShoppingCart/${productId}`);
+    const response = await ApiConfig.post(
+      `/api/customer/addToShoppingCart/${productId}`,
+      null, // Тело запроса отсутствует, но аргумент обязателен для post-запроса
+      { params: { quantity } } // Передаем `quantity` в URL-параметрах
+    );
     return response.data;
   } catch (error) {
     console.error('Ошибка при добавлении в корзину:', error.response?.data || error.message);
     throw error;
   }
 }
-
 // Получить продукты из корзины
 export async function getProductsFromShoppingCart() {
   try {
@@ -110,6 +112,46 @@ export async function getReviews(productId) {
     return response.data;
   } catch (error) {
     console.error('Ошибка при получении отзывов:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+export async function getSimilar(similarData) {
+  try {
+    const response = await ApiConfig.post("/api/public/homePageCategoryDetails/similar", similarData);
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при получении рекомендованных товаров:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+export async function getRecommended(recommendedData) {
+  try {
+    const response = await ApiConfig.post("/api/public/homePageCategoryDetails/recommended", recommendedData);
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при получении рекомендованных товаров:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+export async function getDiscounts(requestBody = null) {
+  try {
+    const response = await ApiConfig.post("/api/public/homePageCategoryDetails/discount", requestBody);
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при получении скидок:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+export async function getBestSellers(bestSellerData = null) {
+  try {
+    const response = await ApiConfig.post("/api/public/homePageCategoryDetails/bestSeller", bestSellerData);
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при получении бестселлеров:", error.response?.data || error.message);
     throw error;
   }
 }
