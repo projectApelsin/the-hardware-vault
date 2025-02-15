@@ -42,12 +42,12 @@ public class PageController {
     @PostMapping("/public/categoryPage/{categoryId}")
     public ResponseEntity<ProductGroupDTO> getCategoryPage(
             @PathVariable Integer categoryId,
-            @RequestBody CharacteristicFilterDTO characteristicFilterDTO) {
+            @RequestBody List<CharacteristicFilterDTO> characteristicFilterDTO) {
 
         // Извлекаем значения характеристик из DTO
-        List<CharacteristicValueDTO> selectedValues = characteristicFilterDTO.getValues();
 
-        ProductGroupDTO result = pageService.getCategoryPage(categoryId, selectedValues);
+
+        ProductGroupDTO result = pageService.getCategoryPage(categoryId, characteristicFilterDTO);
         return ResponseEntity.ok(result);
     }
 
@@ -62,9 +62,11 @@ public class PageController {
         return ResponseEntity.ok().body(pageService.getFastSearchResult(query,pageable));
     }
 
-    @GetMapping("/public/searchResult/{query}")
-    private ResponseEntity<ProductGroupDTO> getSearchResultPage(@PathVariable String query, Pageable pageable){
-        return ResponseEntity.ok().body(pageService.getSearchResultPage(query, pageable));
+    @PostMapping("/public/searchResult/{query}")
+    private ResponseEntity<ProductGroupDTO> getSearchResultPage(@PathVariable String query,
+                                                                @RequestBody List<CharacteristicFilterDTO> characteristicFilterDTO,
+                                                                Pageable pageable){
+        return ResponseEntity.ok().body(pageService.getSearchResultPage(query, characteristicFilterDTO,pageable));
     }
 
     @GetMapping("/public/categoryTitles")
@@ -72,7 +74,7 @@ public class PageController {
         return ResponseEntity.ok().body(pageService.getCategoryTitles());
     }
 
-    @GetMapping("/public/homePageCategoryDetails/{criteria}")
+    @PostMapping("/public/homePageCategoryDetails/{criteria}")
     private ResponseEntity<ProductGroupDTO> getHomePageCategoryDetails(@PathVariable String criteria,
                                                                        HttpServletRequest request,
                                                                        Pageable pageable, @RequestBody RecommendationFilterDTO recommendationFilterDTO){
@@ -84,6 +86,11 @@ public class PageController {
     private ResponseEntity<List<CharacteristicFilterDTO>> getSortCharacteristics(@PathVariable Integer categoryId){
         return ResponseEntity.ok().body(pageService.getCategoryCharacteristic(categoryId));
     }
+    @GetMapping("/public/getSortSearchCharacteristics/{query}")
+    private ResponseEntity<List<CharacteristicFilterDTO>> getSortSearchCharacteristics(@PathVariable String query, Pageable pageable){
+        return ResponseEntity.ok().body(pageService.getSearchCharacteristic(query, pageable));
+    }
+
 
 }
 

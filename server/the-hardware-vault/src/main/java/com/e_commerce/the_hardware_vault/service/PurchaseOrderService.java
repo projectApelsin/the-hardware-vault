@@ -59,7 +59,13 @@ public class PurchaseOrderService {
         // Генерація унікального liqpayOrderId
         String liqpayOrderId = "order_" + System.currentTimeMillis();
         po.setLiqpayOrderId(liqpayOrderId);
+        Customer customer = customerRepository.findById(purchaseOrderDTO.getCustomerId()).get();
 
+        purchaseOrderDTO.getPurchaseProductsId().forEach(product->{
+            customer.getShoppingCart().remove(product);
+        });
+
+        customerRepository.save(customer);
         PurchaseOrder savedOrder = orderRepository.save(po);
 
         // 2. Підготовка даних для LiqPay
@@ -71,7 +77,7 @@ public class PurchaseOrderService {
         params.put("currency", "UAH");
         params.put("description", "Замовлення №" + savedOrder.getId());
         params.put("order_id", savedOrder.getLiqpayOrderId()); // Використовуємо liqpayOrderId
-        params.put("server_url", "https://987d-2a02-2378-1183-e16-f9aa-a16d-edce-a200.ngrok-free.app//api/customer/order/callback");
+        params.put("server_url", "https://0e89-62-16-15-227.ngrok-free.app/api/customer/order/callback");
 
         // 3. Генерація даних для форми LiqPay
         String data = Base64.getEncoder()

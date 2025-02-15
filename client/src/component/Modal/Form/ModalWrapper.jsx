@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import "./ModalForm.scss";
+import { motion } from "framer-motion"; // Импорт для анимации
 
 const ModalWrapper = ({ isOpen, onClose, children }) => {
-  const [isOutsideClick, setIsOutsideClick] = useState(false);
-
   // Закрытие модального окна при нажатии клавиши Esc
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -18,34 +16,34 @@ const ModalWrapper = ({ isOpen, onClose, children }) => {
     };
   }, [isOpen, onClose]);
 
-  // Логика определения нажатия и отпускания за пределами модального окна
-  const handleMouseDown = (e) => {
+  // Логика закрытия по клику вне окна
+  const handleOverlayClick = (e) => {
     if (e.target.classList.contains("modal__overlay")) {
-      setIsOutsideClick(true);
-    } else {
-      setIsOutsideClick(false);
-    }
-  };
-
-  const handleMouseUp = (e) => {
-    if (isOutsideClick && e.target.classList.contains("modal__overlay")) {
       onClose();
     }
-    setIsOutsideClick(false);
   };
 
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div
-      className="modal__overlay"
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
+    <motion.div
+      className="fixed z-1000 w-full h-full top-0 left-0 flex justify-center items-center bg-black/50 modal__overlay"
+      onClick={handleOverlayClick}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
     >
-      <div className="modal__content">
+      <motion.div
+        className=""
+        initial={{ scale: 0.9 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.9 }}
+        transition={{ duration: 0.3 }}
+      >
         {children}
-      </div>
-    </div>,
+      </motion.div>
+    </motion.div>,
     document.body
   );
 };

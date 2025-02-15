@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+  --font-montserrat: Montserrat, serif;
+  --color-smalt-50: #eff5ff;
+  --color-smalt-100: #dce8fd;
+  --color-smalt-200: #c1d7fc;
+  --color-smalt-300: #96bffa;
+  --color-smalt-400: #649cf6;
+  --color-smalt-500: #4078f1;
+  --color-smalt-600: #2a59e6;
+  --color-smalt-700: #2245d3;
+  --color-smalt-800: #2239ab;
+  --color-smalt-900: #243a94;
+  --color-smalt-950: #192252;
+
+
+  /* ... */
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+ /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+}
+}

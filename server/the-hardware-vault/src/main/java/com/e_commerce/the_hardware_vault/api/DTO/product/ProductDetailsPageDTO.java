@@ -17,7 +17,7 @@ public class ProductDetailsPageDTO {
 
     private Integer rating;
 
-
+    private Integer discountPrice;
 
     private List<String> otherImage;
 

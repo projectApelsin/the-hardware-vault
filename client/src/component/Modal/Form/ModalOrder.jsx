@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import ModalWrapper from "./ModalWrapper"; // Используем ранее созданный ModalWrapper
+import ModalWrapper from "./ModalWrapper";
 import PaymentComponent from "../../Payment/PaymentComponent";
-import "./ModalForm.scss";
 
 const ModalOrder = ({ isOpen, onClose, purchaseProductsId, price, quantity }) => {
   const [formData, setFormData] = useState({
     city: "",
     postalOffice: "",
-    deliveryMethod: "nova_poshta", // Значение по умолчанию
+    deliveryMethod: "nova_poshta",
   });
 
   const [isPaymentTriggered, setPaymentTriggered] = useState(false);
@@ -33,36 +32,37 @@ const ModalOrder = ({ isOpen, onClose, purchaseProductsId, price, quantity }) =>
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose}>
       {!isPaymentTriggered ? (
-        <div className="modal__content">
-          <div className="modal__content-header">
-            <h2 className="modal__content-header-text">Оформлення замовлення</h2>
-            <button className="modal__close" onClick={onClose}>&times;</button>
+        <div className="bg-smalt-50 p-6 flex flex-col rounded-lg min-h-[40vh] max-h-[90vh] overflow-y-auto w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[40vw] gap-5">
+          <div className="flex justify-between items-center">
+            <h2 className="font-semibold font-montserrat text-lg sm:text-xl">Оформлення замовлення</h2>
+            <img
+              src="/icons/close-icon.svg"
+              alt="Закрыть"
+              className="cursor-pointer w-5 h-5"
+              onClick={onClose}
+            />
           </div>
 
-          <div className="modal__content-body">
-            <div className="modal__content-body-input">
-              <div className="modal__content-body-input-frame">
-                <label className="modal__content-body-input-frame-title">
-                  Місто:
-                </label>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className="block mb-1 text-sm">Місто:</label>
                 <input
                   type="text"
                   name="city"
-                  className="modal__content-body-input-frame-line-area"
+                  className="h-10 w-full rounded-md border-2 border-smalt-800 focus:border-smalt-800 focus:outline-none pl-4"
                   value={formData.city}
                   onChange={handleInputChange}
                   placeholder="Введіть ваше місто"
                 />
               </div>
 
-              <div className="modal__content-body-input-frame">
-                <label className="modal__content-body-input-frame-title">
-                  Номер поштового відділення:
-                </label>
+              <div>
+                <label className="block mb-1 text-sm">Номер поштового відділення:</label>
                 <input
                   type="text"
                   name="postalOffice"
-                  className="modal__content-body-input-frame-line-area"
+                  className="h-10 w-full rounded-md border-2 border-smalt-800 focus:border-smalt-800 focus:outline-none pl-4"
                   value={formData.postalOffice}
                   onChange={handleInputChange}
                   placeholder="Введіть номер відділення"
@@ -70,40 +70,36 @@ const ModalOrder = ({ isOpen, onClose, purchaseProductsId, price, quantity }) =>
               </div>
             </div>
 
-            <div className="modal__content-body-input-checkbox">
-              <label>
+            <div className="flex flex-col gap-3">
+              <label className="flex gap-2 items-center">
                 <input
                   type="radio"
                   name="deliveryMethod"
                   checked={formData.deliveryMethod === "nova_poshta"}
                   onChange={() => handleDeliveryChange("nova_poshta")}
+                  className="cursor-pointer"
                 />
-                <span className="modal__content-body-input-checkbox-text">
-                  Нова Пошта
-                </span>
+                <span className="text-sm">Нова Пошта</span>
               </label>
-              <label>
+              <label className="flex gap-2 items-center">
                 <input
                   type="radio"
                   name="deliveryMethod"
                   checked={formData.deliveryMethod === "ukr_poshta"}
                   onChange={() => handleDeliveryChange("ukr_poshta")}
+                  className="cursor-pointer"
                 />
-                <span className="modal__content-body-input-checkbox-text">
-                  Укр Пошта
-                </span>
+                <span className="text-sm">Укр Пошта</span>
               </label>
             </div>
           </div>
 
-          <div className="modal__content-body-confirm">
-            <div
-              className="modal__content-body-confirm-button"
-              onClick={handleSubmit}
-            >
-              <p className="modal__content-body-confirm-button-text">Підтвердити замовлення</p>
-            </div>
-          </div>
+          <button
+            className="bg-smalt-500 h-10 hover:bg-smalt-600 duration-200 hover:text-white active:bg-smalt-800 active:text-white rounded-md cursor-pointer w-full text-center"
+            onClick={handleSubmit}
+          >
+            Підтвердити замовлення
+          </button>
         </div>
       ) : (
         <PaymentComponent

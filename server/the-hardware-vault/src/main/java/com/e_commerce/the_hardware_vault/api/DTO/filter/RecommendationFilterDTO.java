@@ -7,4 +7,6 @@ public class RecommendationFilterDTO {
     private Integer categoryId;
 
     private Integer budget;
+
+    private Integer productId;
 }

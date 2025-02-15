@@ -100,4 +100,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     ORDER BY p.rating DESC
 """)
     Page<Product> findProductsByBudget(@Param("budget") Integer budget, Pageable pageable);
+
+
 }
