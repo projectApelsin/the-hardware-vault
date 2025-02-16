@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import ProductCard from "../ProductCard/ProductCard";
-import SortComponent from "../sort/SortComponent";
+import SortComponent from "../Sort/SortComponent";
 
 
 const ProductList = ({ productGroup }) => {
