@@ -5,8 +5,8 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    host: import.meta.env.VITE_APP_HOST,
-    port: import.meta.env.VITE_APP_PORT,
+    host: 0.0.0.0,
+    port: 5173,
     proxy: {
       '/api': {
         target: 'https://backend-production-e7c9.up.railway.app',
