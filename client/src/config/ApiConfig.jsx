@@ -38,5 +38,5 @@ ApiConfig.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
+console.log("Используемый baseURL:", import.meta.env.VITE_API_BASE_URL);
 export default ApiConfig;
