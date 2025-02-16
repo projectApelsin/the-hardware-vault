@@ -108,7 +108,7 @@ public class AuthController {
         String newAccessToken = jwtService.generateToken(username, customerService.getCustomerId(username), role, 1000L * 60 * 15); // 15 минут
 
         ResponseCookie accessCookie = ResponseCookie.from("accessToken", newAccessToken)
-                .httpOnly(true)
+                .httpOnly(false)
                 .secure(true)
                 .path("/")
                 .maxAge(15 * 60)
