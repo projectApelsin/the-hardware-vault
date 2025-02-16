@@ -59,14 +59,14 @@ public class AuthController {
 
         // Устанавливаем токены в куки
         ResponseCookie accessCookie = ResponseCookie.from("accessToken", accessToken)
-                .httpOnly(true)
+                .httpOnly(false)
                 .secure(true) // Только HTTPS
                 .path("/")
                 .maxAge( 60 * 15) // 15 минут
                 .build();
 
         ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
-                .httpOnly(true)
+                .httpOnly(false)
                 .secure(true) // Только HTTPS
                 .path("/")
                 .maxAge(7 * 24 * 60 * 60) // 7 дней
