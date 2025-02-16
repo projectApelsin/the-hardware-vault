@@ -85,8 +85,8 @@ const SearchComponent = () => {
         </div>
         {/** Контейнер с результатами поиска */}
         <div
-          className={`flex flex-row gap-20 justify-center bg-smalt-500 absolute w-[674px] top-[120px] p-10 rounded-lg shadow-lg 
-  transition-all duration-300 ease-in-out transform ${isActive && results.length > 0 ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
+          className={`flex flex-row gap-20 justify-center bg-smalt-500  w-[674px] top-[120px] p-10 rounded-lg shadow-lg 
+  transition-all z-1000 absolute duration-300 ease-in-out transform ${isActive && results.length > 0 ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
             }`}
         >
           <div className="flex flex-col gap-5">
