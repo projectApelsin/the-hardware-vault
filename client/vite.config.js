@@ -9,8 +9,9 @@ export default defineConfig({
       '/api': {
         target: 'https://backend-production-e7c9.up.railway.app',
         changeOrigin: true,
-        secure: true,
+        secure: false,
       }
     }
+    
 }
 })

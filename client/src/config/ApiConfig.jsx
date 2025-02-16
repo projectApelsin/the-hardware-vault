@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ApiConfig = axios.create({
-    baseURL: 'https://backend-production-e7c9.up.railway.app',
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'https://backend-production-e7c9.up.railway.app',
     withCredentials: true, // Включаем куки
 });
 
