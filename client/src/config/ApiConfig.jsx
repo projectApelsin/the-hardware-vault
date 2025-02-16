@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ApiConfig = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://backend-production-e7c9.up.railway.app:8080',
     withCredentials: true, // Включаем куки
 });
 
@@ -21,7 +21,7 @@ ApiConfig.interceptors.response.use(
 
             try {
                 const refreshResponse = await axios.post(
-                    'http://localhost:8080/api/auth/refresh',
+                    'http://backend-production-e7c9.up.railway.app:8080/api/auth/refresh',
                     {},
                     { withCredentials: true }
                 );
