@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ApiConfig = axios.create({
-    baseURL: 'https://backend-production-e7c9.up.railway.app:8080',
+    baseURL: 'https://backend-production-e7c9.up.railway.app',
     withCredentials: true, // Включаем куки
 });
 
@@ -21,7 +21,7 @@ ApiConfig.interceptors.response.use(
 
             try {
                 const refreshResponse = await axios.post(
-                    'https://backend-production-e7c9.up.railway.app:8080/api/auth/refresh',
+                    'https://backend-production-e7c9.up.railway.app/api/auth/refresh',
                     {},
                     { withCredentials: true }
                 );
