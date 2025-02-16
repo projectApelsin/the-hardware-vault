@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import ProductCard from "../ProductCard/ProductCard";
-import SortComponent from "../Sort/SortComponent";
-import "./ProductList.scss";
+import SortComponent from "../sort/SortComponent";
+
 
 const ProductList = ({ productGroup }) => {
   const { title, productCards = [] } = productGroup;
