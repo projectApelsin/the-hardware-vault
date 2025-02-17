@@ -60,7 +60,7 @@ const FilterCharacteristic = ({ categoryId, query, onFilterChange }) => {
               return (
                 <div
                   key={value.valueId}  // Используем уникальный ключ для каждого значения
-                  className="flex flex-row items-center gap-2 cursor-pointer justify-between"
+                  className="flex flex-row items-center gap-2 cursor-pointer "
                   onClick={() => handleFilterChange(char.characteristicName, value.valueId)}
                 >
                   <img
