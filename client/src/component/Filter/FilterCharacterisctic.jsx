@@ -54,13 +54,13 @@ const FilterCharacteristic = ({ categoryId, query, onFilterChange }) => {
       {characteristics.map((char) => (
         <div key={char.characteristicName} className="bg-smalt-100 rounded-2xl p-7 flex flex-col gap-5">
           <p className="font-montserrat font-semibold text-xl">{char.characteristicName}</p>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col flex-wrap gap-4">
             {char.values.map((value) => {
               const isSelected = selectedFilters[char.characteristicName]?.includes(value.valueId);
               return (
                 <div
                   key={value.valueId}  // Используем уникальный ключ для каждого значения
-                  className="flex flex-row gap-2 cursor-pointer justify-between"
+                  className="flex flex-row items-center gap-2 cursor-pointer justify-between"
                   onClick={() => handleFilterChange(char.characteristicName, value.valueId)}
                 >
                   <img
