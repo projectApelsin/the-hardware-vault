@@ -32,7 +32,7 @@ const ProductBuyCard = ({ image, title, price, discountPrice, }) => {
                 </div>
               </>
             ) : (
-              <span className="font-montserrat font-bold text-2xl">{productPrice} ₴</span>
+              <span className="font-montserrat font-bold text-2xl">{price} ₴</span>
             )}
           </div>
           <div className="flex flex-row mb-5 gap-0.5">
