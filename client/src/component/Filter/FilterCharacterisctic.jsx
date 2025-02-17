@@ -54,7 +54,7 @@ const FilterCharacteristic = ({ categoryId, query, onFilterChange }) => {
       {characteristics.map((char) => (
         <div key={char.characteristicName} className="bg-smalt-100 rounded-2xl p-7 flex flex-col gap-5">
           <p className="font-montserrat font-semibold text-xl">{char.characteristicName}</p>
-          <div className="flex flex-row flex-wrap gap-4">
+          <div className="flex flex-col flex-wrap gap-4">
             {char.values.map((value) => {
               const isSelected = selectedFilters[char.characteristicName]?.includes(value.valueId);
               return (
