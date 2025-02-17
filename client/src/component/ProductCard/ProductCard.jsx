@@ -52,7 +52,7 @@ const ProductCard = ({ id, title, price, discountPrice, rating = 0, image }) => 
     <div className="flex flex-col bg-smalt-50 gap-2 relative w-70 h-115 ">
   <div className="pt-14 pr-5 pl-5 pb-4 flex justify-center">
     <Link to={`/productDetails/${id}`}>
-      <img src={"/images/" + image} alt={title} className="w-[228px] h-[350px]" />
+      <img src={"/images/" + image} alt={title} className="w-[228px] h-[200px]" />
     </Link>
     <img
       className="absolute top-[16px] right-[16px] cursor-pointer"
